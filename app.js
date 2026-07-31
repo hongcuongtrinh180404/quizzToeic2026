@@ -53,7 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Setup Controls
         modeOptions: document.querySelectorAll('.mode-option'),
         sourceBtns: document.querySelectorAll('#source-selector .select-btn'),
-        countBtns: document.querySelectorAll('#count-selector .select-btn'),
+        inputSessionCount: document.getElementById('input-session-count'),
+        btnCountAll: document.getElementById('btn-count-all'),
+        presetBtns: document.querySelectorAll('#count-presets .preset-btn'),
+        totalCountBadge: document.getElementById('total-count-badge'),
         btnStartSession: document.getElementById('btn-start-session'),
 
         // Practice Controls
@@ -208,6 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const resp = await fetch('data/data.json');
             state.allVocab = await resp.json();
             console.log(`Loaded ${state.allVocab.length} vocab entries.`);
+            if (elements.totalCountBadge) {
+                elements.totalCountBadge.textContent = state.allVocab.length;
+            }
+            if (elements.inputSessionCount) {
+                elements.inputSessionCount.max = state.allVocab.length;
+            }
         } catch (err) {
             console.error('Failed to load data.json:', err);
         }
@@ -240,17 +249,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 elements.sourceBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 state.sessionSource = btn.dataset.source;
+                
+                // Update total count badge based on source
+                const availableCount = state.sessionSource === 'srs' ? state.srsBox1.size : state.allVocab.length;
+                if (elements.totalCountBadge) {
+                    elements.totalCountBadge.textContent = availableCount;
+                }
+                if (elements.inputSessionCount) {
+                    elements.inputSessionCount.max = availableCount;
+                }
             });
         });
 
-        // Count Selection
-        elements.countBtns.forEach(btn => {
+        // Quick Preset Buttons
+        elements.presetBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                elements.countBtns.forEach(b => b.classList.remove('active'));
+                elements.presetBtns.forEach(b => b.classList.remove('active'));
+                elements.btnCountAll.classList.remove('active');
                 btn.classList.add('active');
-                const val = btn.dataset.count;
-                state.sessionCount = val === 'all' ? 'all' : parseInt(val, 10);
+                
+                const val = parseInt(btn.dataset.val, 10);
+                elements.inputSessionCount.value = val;
             });
+        });
+
+        // Select All Count Button
+        elements.btnCountAll.addEventListener('click', () => {
+            elements.presetBtns.forEach(b => b.classList.remove('active'));
+            elements.btnCountAll.classList.add('active');
+            
+            const maxVal = state.sessionSource === 'srs' ? state.srsBox1.size : state.allVocab.length;
+            elements.inputSessionCount.value = maxVal;
+        });
+
+        // Input Field Manual Input Listener
+        elements.inputSessionCount.addEventListener('input', () => {
+            const val = parseInt(elements.inputSessionCount.value, 10);
+            elements.presetBtns.forEach(b => {
+                if (parseInt(b.dataset.val, 10) === val) {
+                    b.classList.add('active');
+                } else {
+                    b.classList.remove('active');
+                }
+            });
+            const maxVal = state.sessionSource === 'srs' ? state.srsBox1.size : state.allVocab.length;
+            if (val === maxVal) {
+                elements.btnCountAll.classList.add('active');
+            } else {
+                elements.btnCountAll.classList.remove('active');
+            }
         });
 
         // Start Session Button
@@ -329,10 +376,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Shuffle pool
         pool = shuffle(pool);
 
-        // Select question count
-        if (state.sessionCount !== 'all') {
-            pool = pool.slice(0, Math.min(state.sessionCount, pool.length));
+        // Select question count from custom input
+        let countVal = 10;
+        if (elements.inputSessionCount) {
+            const rawVal = elements.inputSessionCount.value.trim();
+            countVal = parseInt(rawVal, 10);
+            if (isNaN(countVal) || countVal < 1) {
+                countVal = 10;
+            }
         }
+        pool = pool.slice(0, Math.min(countVal, pool.length));
 
         state.sessionItems = pool;
         state.currentIndex = 0;

@@ -99,12 +99,21 @@
                         </div>
 
                         <div class="config-group">
-                            <label class="config-label">Số lượng trường nghĩa (câu hỏi):</label>
-                            <div class="button-selector" id="count-selector">
-                                <button type="button" class="select-btn" data-count="5">5</button>
-                                <button type="button" class="select-btn active" data-count="10">10</button>
-                                <button type="button" class="select-btn" data-count="20">20</button>
-                                <button type="button" class="select-btn" data-count="all">Tất cả</button>
+                            <label class="config-label" for="input-session-count">Nhập số lượng trường nghĩa (số câu hỏi):</label>
+                            <div class="custom-count-wrapper">
+                                <input type="number" id="input-session-count" class="count-number-input" min="1" max="151" value="10" placeholder="Nhập số câu...">
+                                <button type="button" id="btn-count-all" class="btn-all-count" title="Chọn toàn bộ từ vựng trong danh sách">
+                                    <i data-lucide="layers"></i> Tất cả (<span id="total-count-badge">151</span>)
+                                </button>
+                            </div>
+                            <div class="quick-presets-group">
+                                <span class="quick-preset-label">Gợi ý nhanh:</span>
+                                <div class="preset-buttons" id="count-presets">
+                                    <button type="button" class="preset-btn" data-val="5">5</button>
+                                    <button type="button" class="preset-btn active" data-val="10">10</button>
+                                    <button type="button" class="preset-btn" data-val="20">20</button>
+                                    <button type="button" class="preset-btn" data-val="50">50</button>
+                                </div>
                             </div>
                         </div>
 
