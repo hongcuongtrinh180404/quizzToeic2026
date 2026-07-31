@@ -1,0 +1,1664 @@
+[
+  {
+    "id": 1,
+    "meaning": "a. nguyên bản, thật",
+    "key_word": "authentic",
+    "synonyms": [
+      "genuine",
+      "real",
+      "orginal"
+    ]
+  },
+  {
+    "id": 2,
+    "meaning": "adv. Nhanh chóng, kịp thời,..",
+    "key_word": "promptly",
+    "synonyms": [
+      "quickly",
+      "immediately",
+      "fast",
+      "instantly",
+      "rapidly",
+      "swiftly",
+      "express",
+      "expedited",
+      "at once",
+      "in no time",
+      "in a timely manner",
+      "in a timely fashion",
+      "speedily",
+      "shortly"
+    ]
+  },
+  {
+    "id": 3,
+    "meaning": "a. đáng tin cậy",
+    "key_word": "reliable",
+    "synonyms": [
+      "dependable",
+      "trustworthy"
+    ]
+  },
+  {
+    "id": 4,
+    "meaning": "a. phụ thuộc vào",
+    "key_word": "reliant",
+    "synonyms": [
+      "dependent",
+      "contingent on"
+    ]
+  },
+  {
+    "id": 5,
+    "meaning": "a. nghiêm ngặt",
+    "key_word": "stringent",
+    "synonyms": [
+      "strict",
+      "rigorous"
+    ]
+  },
+  {
+    "id": 6,
+    "meaning": "liên tiếp, nối tiếp",
+    "key_word": "successive",
+    "synonyms": [
+      "consecutive",
+      "in a row"
+    ]
+  },
+  {
+    "id": 7,
+    "meaning": "a. khắc nghiệt, bất lợi (thời tiết)",
+    "key_word": "harsh",
+    "synonyms": [
+      "inclement",
+      "adverse",
+      "severe",
+      "unfavorable",
+      "extreme"
+    ]
+  },
+  {
+    "id": 8,
+    "meaning": "v. thực hiện, tiến hành, thi hành, áp đặt",
+    "key_word": "perform",
+    "synonyms": [
+      "carry out",
+      "conduct",
+      "implement",
+      "execute",
+      "administer",
+      "institute",
+      "enforce",
+      "impose"
+    ]
+  },
+  {
+    "id": 9,
+    "meaning": "a. chính xác",
+    "key_word": "exact",
+    "synonyms": [
+      "precise",
+      "accurate"
+    ]
+  },
+  {
+    "id": 10,
+    "meaning": "n. vị trí",
+    "key_word": "location",
+    "synonyms": [
+      "venue",
+      "site",
+      "place",
+      "address",
+      "position"
+    ]
+  },
+  {
+    "id": 11,
+    "meaning": "adv. kĩ lưỡng, chu đáo, tỉ mỉ",
+    "key_word": "thoughtfully",
+    "synonyms": [
+      "considerately",
+      "meticulously",
+      "thoroughly",
+      "closely",
+      "elaborately"
+    ]
+  },
+  {
+    "id": 12,
+    "meaning": "a. đáng kể, to lớn, đáng chú ý",
+    "key_word": "considerable",
+    "synonyms": [
+      "significant",
+      "dramatically",
+      "substantial",
+      "remarkable",
+      "noticeable",
+      "marked",
+      "sizable",
+      "great"
+    ]
+  },
+  {
+    "id": 13,
+    "meaning": "n. người mới, chưa có kinh nghiệm",
+    "key_word": "novice",
+    "synonyms": [
+      "beginner",
+      "newcomer"
+    ]
+  },
+  {
+    "id": 14,
+    "meaning": "a. mới",
+    "key_word": "novel",
+    "synonyms": [
+      "new",
+      "innovative"
+    ]
+  },
+  {
+    "id": 15,
+    "meaning": "v. nghĩ ra, phát minh, thiết kế ra",
+    "key_word": "devise",
+    "synonyms": [
+      "come up with",
+      "develop",
+      "formulate",
+      "design",
+      "invent"
+    ]
+  },
+  {
+    "id": 16,
+    "meaning": "v. thay đổi, sửa đổi",
+    "key_word": "change",
+    "synonyms": [
+      "modify",
+      "alter",
+      "revise",
+      "adjust",
+      "differ",
+      "vary",
+      "shift",
+      "switch",
+      "amend",
+      "edit"
+    ]
+  },
+  {
+    "id": 17,
+    "meaning": "adv. Tình cờ, vô tình",
+    "key_word": "accidentally",
+    "synonyms": [
+      "by mistake",
+      "unintentionally",
+      "by chance"
+    ]
+  },
+  {
+    "id": 18,
+    "meaning": "a. kết thúc, hủy",
+    "key_word": "terminate",
+    "synonyms": [
+      "end",
+      "cancel"
+    ]
+  },
+  {
+    "id": 19,
+    "meaning": "a. hợp lý, phải chăng (giá cả)",
+    "key_word": "affordable",
+    "synonyms": [
+      "reasonable",
+      "inexpensive",
+      "cost-effective"
+    ]
+  },
+  {
+    "id": 20,
+    "meaning": "tận tâm, cống hiến cho cái gì đó",
+    "key_word": "be committed to",
+    "synonyms": [
+      "be devoted to",
+      "be dedicated to"
+    ]
+  },
+  {
+    "id": 21,
+    "meaning": "n. mục tiêu, mục đích",
+    "key_word": "objective",
+    "synonyms": [
+      "goal",
+      "target",
+      "aim",
+      "purpose",
+      "mission",
+      "intent"
+    ]
+  },
+  {
+    "id": 22,
+    "meaning": "n. lợi nhuận",
+    "key_word": "proceeds",
+    "synonyms": [
+      "turnover",
+      "yield",
+      "revenue",
+      "sales",
+      "earnings",
+      "returns",
+      "gains",
+      "margin"
+    ]
+  },
+  {
+    "id": 23,
+    "meaning": "v. thuyết phục",
+    "key_word": "convince",
+    "synonyms": [
+      "persuade"
+    ]
+  },
+  {
+    "id": 24,
+    "meaning": "a. ngắn gọn, cô đọng",
+    "key_word": "brief",
+    "synonyms": [
+      "short",
+      "concise",
+      "condensed"
+    ]
+  },
+  {
+    "id": 25,
+    "meaning": "prep. Ngoại trừ",
+    "key_word": "except (for)",
+    "synonyms": [
+      "excepting",
+      "apart from",
+      "aside from",
+      "excluding",
+      "other than",
+      "barring"
+    ]
+  },
+  {
+    "id": 26,
+    "meaning": "adv. Trên khắp",
+    "key_word": "throughout",
+    "synonyms": [
+      "across: trên khắp"
+    ]
+  },
+  {
+    "id": 27,
+    "meaning": "v. bao gồm",
+    "key_word": "include",
+    "synonyms": [
+      "feature",
+      "cover",
+      "involve",
+      "consist of",
+      "contain",
+      "be composed of",
+      "comprise of",
+      "factor into"
+    ]
+  },
+  {
+    "id": 28,
+    "meaning": "a. rõ ràng",
+    "key_word": "explicit",
+    "synonyms": [
+      "clear",
+      "straightforward"
+    ]
+  },
+  {
+    "id": 29,
+    "meaning": "a. xuất sắc, nổi bật",
+    "key_word": "accomplished",
+    "synonyms": [
+      "excellent",
+      "distinguished",
+      "notable",
+      "exceptional",
+      "outstanding",
+      "prominent"
+    ]
+  },
+  {
+    "id": 30,
+    "meaning": "v. chuyên về",
+    "key_word": "specialize in",
+    "synonyms": [
+      "excel in",
+      "major in",
+      "be expert in"
+    ]
+  },
+  {
+    "id": 31,
+    "meaning": "a. nổi tiếng, được biết tới, được chú ý",
+    "key_word": "famous",
+    "synonyms": [
+      "well-knowned",
+      "famed (for)",
+      "renowned",
+      "distinguished",
+      "acclaimed",
+      "noted",
+      "higly-profile",
+      "popular",
+      "celebrated",
+      "highly regarded",
+      "highly reputable"
+    ]
+  },
+  {
+    "id": 32,
+    "meaning": "v. vượt qua, vượt qua",
+    "key_word": "exceed",
+    "synonyms": [
+      "surpass",
+      "go beyond"
+    ]
+  },
+  {
+    "id": 33,
+    "meaning": "v. dẫn đến, gây ra",
+    "key_word": "lead to",
+    "synonyms": [
+      "result in",
+      "bring about",
+      "cause",
+      "prompt"
+    ]
+  },
+  {
+    "id": 34,
+    "meaning": "a. nghi ngờ, mơ hồ, không chắc",
+    "key_word": "skeptical",
+    "synonyms": [
+      "doubtful",
+      "vague",
+      "uncertain"
+    ]
+  },
+  {
+    "id": 35,
+    "meaning": "a. khả thi, thực tế",
+    "key_word": "realistic",
+    "synonyms": [
+      "practical",
+      "feasible",
+      "viable"
+    ]
+  },
+  {
+    "id": 36,
+    "meaning": "Chưa có nghĩa",
+    "key_word": "inform",
+    "synonyms": [
+      "advise",
+      "notify sb of/about sth: thông báo ai về cái gì # announce sth: thông báo cái gì"
+    ]
+  },
+  {
+    "id": 37,
+    "meaning": "a. đủ đk cho",
+    "key_word": "qualified",
+    "synonyms": [
+      "eligible to do sth/ for sth"
+    ]
+  },
+  {
+    "id": 38,
+    "meaning": "a. phù hợp",
+    "key_word": "appropriate",
+    "synonyms": [
+      "suitable for",
+      "proper"
+    ]
+  },
+  {
+    "id": 39,
+    "meaning": "adv. Thường, thường xuyên, thông thường",
+    "key_word": "usually",
+    "synonyms": [
+      "often",
+      "regularly",
+      "frequently",
+      "on a regular basis",
+      "commonly",
+      "routinely",
+      "typically"
+    ]
+  },
+  {
+    "id": 40,
+    "meaning": "a. tiếp theo, sắp tới",
+    "key_word": "following",
+    "synonyms": [
+      "next",
+      "coming/upcoming"
+    ]
+  },
+  {
+    "id": 41,
+    "meaning": "v. đính kèm, gửi kèm",
+    "key_word": "enclose",
+    "synonyms": [
+      "attach",
+      "include",
+      "accompany",
+      "send with",
+      "staple"
+    ]
+  },
+  {
+    "id": 42,
+    "meaning": "a. trước đây",
+    "key_word": "previous",
+    "synonyms": [
+      "former",
+      "prior",
+      "preceded",
+      "last",
+      "past",
+      "earlier"
+    ]
+  },
+  {
+    "id": 43,
+    "meaning": "adv. Chỉ, một cách độc quyền",
+    "key_word": "only",
+    "synonyms": [
+      "merely",
+      "solely",
+      "exclusively"
+    ]
+  },
+  {
+    "id": 44,
+    "meaning": "v. tuyển dụng",
+    "key_word": "hire",
+    "synonyms": [
+      "recruit",
+      "employ",
+      "bring in",
+      "engage"
+    ]
+  },
+  {
+    "id": 45,
+    "meaning": "v. kiểm tra, điều tra, tìm hiểu",
+    "key_word": "look into",
+    "synonyms": [
+      "inspect",
+      "examine",
+      "check",
+      "investigate"
+    ]
+  },
+  {
+    "id": 46,
+    "meaning": "v. sao chép",
+    "key_word": "replicate",
+    "synonyms": [
+      "duplicate",
+      "copy"
+    ]
+  },
+  {
+    "id": 47,
+    "meaning": "v. chỉ dịnh, giao phó",
+    "key_word": "designate",
+    "synonyms": [
+      "authorize",
+      "assign",
+      "delegate",
+      "entrust",
+      "commission",
+      "grant"
+    ]
+  },
+  {
+    "id": 48,
+    "meaning": "được bổ nhiệm, chỉ định chức danh gì đó",
+    "key_word": "be named",
+    "synonyms": [
+      "be appointed",
+      "be assigned",
+      "be designated"
+    ]
+  },
+  {
+    "id": 49,
+    "meaning": "a. có khả năng làm gì đó",
+    "key_word": "be capable of N/Ving",
+    "synonyms": [
+      "be able/likely to Vo"
+    ]
+  },
+  {
+    "id": 50,
+    "meaning": "n. nguy hiểm",
+    "key_word": "jeopardy",
+    "synonyms": [
+      "danger",
+      "hazard"
+    ]
+  },
+  {
+    "id": 51,
+    "meaning": "v. từ chức",
+    "key_word": "step down",
+    "synonyms": [
+      "resign from",
+      "depart"
+    ]
+  },
+  {
+    "id": 52,
+    "meaning": "v. khen ai về cái gì",
+    "key_word": "commend",
+    "synonyms": [
+      "compliment on",
+      "praise",
+      "applaud",
+      "recognize sb for sth"
+    ]
+  },
+  {
+    "id": 53,
+    "meaning": "v. dự kiến, dự đoán",
+    "key_word": "predict",
+    "synonyms": [
+      "project",
+      "foresee",
+      "forcast",
+      "anticipate"
+    ]
+  },
+  {
+    "id": 54,
+    "meaning": "v. đảm nhận",
+    "key_word": "assume",
+    "synonyms": [
+      "take on"
+    ]
+  },
+  {
+    "id": 55,
+    "meaning": "v. có được, đạt được",
+    "key_word": "gain",
+    "synonyms": [
+      "attain",
+      "obtain",
+      "acquire",
+      "achieve"
+    ]
+  },
+  {
+    "id": 56,
+    "meaning": "v. thu mua được",
+    "key_word": "acquire",
+    "synonyms": [
+      "procure",
+      "buy",
+      "purchase"
+    ]
+  },
+  {
+    "id": 57,
+    "meaning": "prep. Trước một thời điểm nào đó",
+    "key_word": "prior to",
+    "synonyms": [
+      "before",
+      "in advance of",
+      "ahead of",
+      "by + thời gian"
+    ]
+  },
+  {
+    "id": 58,
+    "meaning": "a. trống, bị bỏ trống",
+    "key_word": "unoccupied",
+    "synonyms": [
+      "empty",
+      "vacant",
+      "abandoned",
+      "blank"
+    ]
+  },
+  {
+    "id": 59,
+    "meaning": "v. đăng ký",
+    "key_word": "sign up for",
+    "synonyms": [
+      "register for",
+      "enroll in"
+    ]
+  },
+  {
+    "id": 60,
+    "meaning": "v. đáp ứng",
+    "key_word": "accommodate",
+    "synonyms": [
+      "meet",
+      "satisfy",
+      "fit",
+      "suit",
+      "adapt",
+      "match"
+    ]
+  },
+  {
+    "id": 61,
+    "meaning": "n. điều khoản",
+    "key_word": "term",
+    "synonyms": [
+      "provision"
+    ]
+  },
+  {
+    "id": 62,
+    "meaning": "v. giải quyết",
+    "key_word": "process",
+    "synonyms": [
+      "handle",
+      "cope with",
+      "deal with",
+      "address",
+      "settle",
+      "tackle with",
+      "solve",
+      "resolve"
+    ]
+  },
+  {
+    "id": 63,
+    "meaning": "adv. Chủ yếu",
+    "key_word": "primarily",
+    "synonyms": [
+      "mainly",
+      "largely",
+      "mostly",
+      "chiefly"
+    ]
+  },
+  {
+    "id": 64,
+    "meaning": "dễ vỡ, mỏng manh",
+    "key_word": "fragile",
+    "synonyms": [
+      "delicate",
+      "breakable",
+      "crack"
+    ]
+  },
+  {
+    "id": 65,
+    "meaning": "v. cải tạo, cải thiện, nâng cấp",
+    "key_word": "renovate",
+    "synonyms": [
+      "remodel",
+      "innovate",
+      "modernize",
+      "restore",
+      "improve",
+      "upgrade",
+      "refurbish",
+      "refurnish"
+    ]
+  },
+  {
+    "id": 66,
+    "meaning": "v. có vai trò như",
+    "key_word": "serve as",
+    "synonyms": [
+      "act as",
+      "function as"
+    ]
+  },
+  {
+    "id": 67,
+    "meaning": "n. vải, quần áo",
+    "key_word": "garment",
+    "synonyms": [
+      "clothes",
+      "clothing",
+      "apparel",
+      "fabric",
+      "attire",
+      "textile"
+    ]
+  },
+  {
+    "id": 68,
+    "meaning": "n. hiệu suất, hiệu quả",
+    "key_word": "performance",
+    "synonyms": [
+      "productivity",
+      "effectiveness",
+      "efficiency",
+      "output",
+      "capacity"
+    ]
+  },
+  {
+    "id": 69,
+    "meaning": "a. quan trọng, cần thiết",
+    "key_word": "important",
+    "synonyms": [
+      "crucial",
+      "critical",
+      "significant",
+      "instrumental in",
+      "essential",
+      "foremost",
+      "necessary",
+      "imperative",
+      "vital",
+      "indispensable",
+      "key",
+      "paramount"
+    ]
+  },
+  {
+    "id": 70,
+    "meaning": "prep. Liên quan về",
+    "key_word": "associated with",
+    "synonyms": [
+      "about",
+      "on",
+      "over",
+      "concerning",
+      "regarding",
+      "pertaining to",
+      "as to  related to",
+      "in terms of",
+      "pertinent to",
+      "with regards to"
+    ]
+  },
+  {
+    "id": 71,
+    "meaning": "adv. Thỉnh thoảng",
+    "key_word": "occasionally",
+    "synonyms": [
+      "sometimes",
+      "once in a while"
+    ]
+  },
+  {
+    "id": 72,
+    "meaning": "v. bắt đầu, khởi xướng",
+    "key_word": "begin",
+    "synonyms": [
+      "start",
+      "commence",
+      "initiate",
+      "inaugurate",
+      "roll out",
+      "kick off",
+      "embark on"
+    ]
+  },
+  {
+    "id": 73,
+    "meaning": "v. nỗ lực, cố gắng làm gì",
+    "key_word": "try to do sth",
+    "synonyms": [
+      "make efforts/attempt to do sth",
+      "attempt to do sth",
+      "endeavor to do sth",
+      "strive to Vo"
+    ]
+  },
+  {
+    "id": 74,
+    "meaning": "a. hiện đại, tiên tiến",
+    "key_word": "state-of-the-art",
+    "synonyms": [
+      "modern",
+      "cutting-edge"
+    ]
+  },
+  {
+    "id": 75,
+    "meaning": "a. lỗi thời",
+    "key_word": "outdated",
+    "synonyms": [
+      "old-fashioned",
+      "obsolete",
+      "out of date"
+    ]
+  },
+  {
+    "id": 76,
+    "meaning": "phù hợp với",
+    "key_word": "align with",
+    "synonyms": [
+      "in line with",
+      "in accordance with",
+      "consistent with"
+    ]
+  },
+  {
+    "id": 77,
+    "meaning": "v. tuân theo",
+    "key_word": "comply with",
+    "synonyms": [
+      "conform to",
+      "abide by",
+      "adhere to",
+      "stick to",
+      "obey",
+      "follow"
+    ]
+  },
+  {
+    "id": 78,
+    "meaning": "a. đủ",
+    "key_word": "adequate",
+    "synonyms": [
+      "enough",
+      "sufficient"
+    ]
+  },
+  {
+    "id": 79,
+    "meaning": "v. phát biểu",
+    "key_word": "make a mark",
+    "synonyms": [
+      "deliver a speech",
+      "deliver an address",
+      "make a remark",
+      "give a speech"
+    ]
+  },
+  {
+    "id": 80,
+    "meaning": "n. đồng nghiệp",
+    "key_word": "coworker",
+    "synonyms": [
+      "peer",
+      "partner",
+      "teammate",
+      "colleague",
+      "fellow"
+    ]
+  },
+  {
+    "id": 81,
+    "meaning": "v. phản đối",
+    "key_word": "object to",
+    "synonyms": [
+      "oppose",
+      "be against",
+      "protest against",
+      "disapprove of"
+    ]
+  },
+  {
+    "id": 82,
+    "meaning": "n. đối thủ",
+    "key_word": "rival",
+    "synonyms": [
+      "opponent",
+      "competitor",
+      "contender"
+    ]
+  },
+  {
+    "id": 83,
+    "meaning": "v. giám sát, quan sát",
+    "key_word": "supervise",
+    "synonyms": [
+      "monitor",
+      "oversee",
+      "observe"
+    ]
+  },
+  {
+    "id": 84,
+    "meaning": "n. quan điểm, góc nhìn",
+    "key_word": "perspective",
+    "synonyms": [
+      "view",
+      "point of view"
+    ]
+  },
+  {
+    "id": 85,
+    "meaning": "v. giảm",
+    "key_word": "decline",
+    "synonyms": [
+      "decrease",
+      "reduce",
+      "lower",
+      "diminish",
+      "fall",
+      "go down",
+      "drop"
+    ]
+  },
+  {
+    "id": 86,
+    "meaning": "v. từ chối",
+    "key_word": "decline",
+    "synonyms": [
+      "turn down",
+      "deny",
+      "refuse",
+      "reject"
+    ]
+  },
+  {
+    "id": 87,
+    "meaning": "v. hoãn, đình chỉ",
+    "key_word": "delay",
+    "synonyms": [
+      "defer",
+      "put off",
+      "postpone",
+      "hold of",
+      "suspend",
+      "put on hold"
+    ]
+  },
+  {
+    "id": 88,
+    "meaning": "v. dừng/ ngưng",
+    "key_word": "cease",
+    "synonyms": [
+      "stop",
+      "halt",
+      "discontinue"
+    ]
+  },
+  {
+    "id": 89,
+    "meaning": "a. chịu trách nhiệm",
+    "key_word": "responsible for",
+    "synonyms": [
+      "accountable for",
+      "in charge of"
+    ]
+  },
+  {
+    "id": 90,
+    "meaning": "a. bổ sung, thêm vào",
+    "key_word": "further",
+    "synonyms": [
+      "extra",
+      "additional",
+      "supplemental"
+    ]
+  },
+  {
+    "id": 91,
+    "meaning": "a. chính",
+    "key_word": "key",
+    "synonyms": [
+      "main",
+      "primary",
+      "principal"
+    ]
+  },
+  {
+    "id": 92,
+    "meaning": "a. phức tạp",
+    "key_word": "complex",
+    "synonyms": [
+      "complicated",
+      "sophisticated",
+      "intricate"
+    ]
+  },
+  {
+    "id": 93,
+    "meaning": "v. đồng ý, chấp thuận",
+    "key_word": "agree sth",
+    "synonyms": [
+      "consent to sth",
+      "accept"
+    ]
+  },
+  {
+    "id": 94,
+    "meaning": "v. liên tục cập nhật tình hình cho ai",
+    "key_word": "keep sb posted",
+    "synonyms": [
+      "keep sb updated",
+      "keep sb informed"
+    ]
+  },
+  {
+    "id": 95,
+    "meaning": "a. cố định, không thay đổi (giá cả)",
+    "key_word": "fixed",
+    "synonyms": [
+      "set",
+      "flat"
+    ]
+  },
+  {
+    "id": 96,
+    "meaning": "v. vứt, bỏ đi",
+    "key_word": "discard",
+    "synonyms": [
+      "dispose of",
+      "throw away",
+      "get rid of"
+    ]
+  },
+  {
+    "id": 97,
+    "meaning": "v. kiểm tra, xem qua",
+    "key_word": "go through",
+    "synonyms": [
+      "inspect",
+      "examine",
+      "investigate"
+    ]
+  },
+  {
+    "id": 98,
+    "meaning": "a. tốt cho sức khỏe",
+    "key_word": "wholesome",
+    "synonyms": [
+      "healthy",
+      "nutritious"
+    ]
+  },
+  {
+    "id": 99,
+    "meaning": "n. sự cống hiến, tận tâm",
+    "key_word": "commitment",
+    "synonyms": [
+      "dedication",
+      "devotion"
+    ]
+  },
+  {
+    "id": 100,
+    "meaning": "a. hài lòng với",
+    "key_word": "content with",
+    "synonyms": [
+      "satisfied with",
+      "pleased with",
+      "happy with"
+    ]
+  },
+  {
+    "id": 101,
+    "meaning": "a. khá, hơi hơi",
+    "key_word": "rather",
+    "synonyms": [
+      "pretty",
+      "fairly",
+      "somewhat",
+      "quite",
+      "slightly",
+      "relatively"
+    ]
+  },
+  {
+    "id": 102,
+    "meaning": "a. đầy tham vọng",
+    "key_word": "ambitious",
+    "synonyms": [
+      "aspriring",
+      "determined"
+    ]
+  },
+  {
+    "id": 103,
+    "meaning": "a. bị thu hút",
+    "key_word": "intrigued",
+    "synonyms": [
+      "appealed",
+      "attracted",
+      "engaged",
+      "interested",
+      "drawn",
+      "fascinated",
+      "captivated",
+      "charmed"
+    ]
+  },
+  {
+    "id": 104,
+    "meaning": "(adj) tỉ mỉ, tinh vi, phức tạp, công phu",
+    "key_word": "elaborate",
+    "synonyms": [
+      "meticulous",
+      "intricate"
+    ]
+  },
+  {
+    "id": 105,
+    "meaning": "prep. Bởi vì",
+    "key_word": "given",
+    "synonyms": [
+      "considering",
+      "on account of",
+      "due to",
+      "owing to",
+      "thanks to",
+      "because of",
+      "in view of",
+      "in light of"
+    ]
+  },
+  {
+    "id": 106,
+    "meaning": "v. gặp phải",
+    "key_word": "come across",
+    "synonyms": [
+      "encounter",
+      "run into"
+    ]
+  },
+  {
+    "id": 107,
+    "meaning": "a. lâu dài, bền",
+    "key_word": "lasting",
+    "synonyms": [
+      "durable",
+      "permanent"
+    ]
+  },
+  {
+    "id": 108,
+    "meaning": "xuất hiện",
+    "key_word": "appear",
+    "synonyms": [
+      "be featured in"
+    ]
+  },
+  {
+    "id": 109,
+    "meaning": "adv. Xấp xỉ, khoảng",
+    "key_word": "roughly",
+    "synonyms": [
+      "approximately",
+      "around",
+      "about + số"
+    ]
+  },
+  {
+    "id": 110,
+    "meaning": "adv. Hầu hết, hầu như",
+    "key_word": "nearly",
+    "synonyms": [
+      "almost",
+      "practically",
+      "virtually"
+    ]
+  },
+  {
+    "id": 111,
+    "meaning": "v. bắt buộc, buộc phải làm gì",
+    "key_word": "compel",
+    "synonyms": [
+      "force",
+      "oblige",
+      "require"
+    ]
+  },
+  {
+    "id": 112,
+    "meaning": "n. đường",
+    "key_word": "avenue",
+    "synonyms": [
+      "boulevard",
+      "street",
+      "road",
+      "drive",
+      "way",
+      "route",
+      "path",
+      "lane"
+    ]
+  },
+  {
+    "id": 113,
+    "meaning": "v. đánh giá",
+    "key_word": "evaluate",
+    "synonyms": [
+      "assess",
+      "review",
+      "appraise",
+      "rate"
+    ]
+  },
+  {
+    "id": 114,
+    "meaning": "n. trách nhiệm, nhiệm vụ",
+    "key_word": "duty",
+    "synonyms": [
+      "responsibility",
+      "mission",
+      "task"
+    ]
+  },
+  {
+    "id": 115,
+    "meaning": "v. cấp vốn, tài trợ",
+    "key_word": "finance",
+    "synonyms": [
+      "fund",
+      "grant",
+      "sponsor"
+    ]
+  },
+  {
+    "id": 116,
+    "meaning": "n. tài sản, bds",
+    "key_word": "property",
+    "synonyms": [
+      "real estate",
+      "realty",
+      "asset"
+    ]
+  },
+  {
+    "id": 117,
+    "meaning": "adv. Hiếm khi, hầu như không",
+    "key_word": "rarely",
+    "synonyms": [
+      "barely",
+      "scarcely",
+      "hardly",
+      "seldom"
+    ]
+  },
+  {
+    "id": 118,
+    "meaning": "n. vỉa hè",
+    "key_word": "pavement",
+    "synonyms": [
+      "sidewalk"
+    ]
+  },
+  {
+    "id": 119,
+    "meaning": "lỗi, hư hỏng (giống nghĩa khác từ loại)",
+    "key_word": "defective",
+    "synonyms": [
+      "faulty",
+      "malfunction",
+      "not working",
+      "out of order",
+      "out of service",
+      "error",
+      "broken",
+      "flawed",
+      "glitch",
+      "act up",
+      "damaged (không cùng loại từ"
+    ]
+  },
+  {
+    "id": 120,
+    "meaning": "a. sâu, sâu sắc",
+    "key_word": "deep",
+    "synonyms": [
+      "profound"
+    ]
+  },
+  {
+    "id": 121,
+    "meaning": "n. nghề nghiệp, sự nghiệp",
+    "key_word": "profession",
+    "synonyms": [
+      "job",
+      "career",
+      "occupation"
+    ]
+  },
+  {
+    "id": 122,
+    "meaning": "n. rác",
+    "key_word": "trash",
+    "synonyms": [
+      "garbage",
+      "rubbish",
+      "waste"
+    ]
+  },
+  {
+    "id": 123,
+    "meaning": "v. kế nhiệm, kế vị",
+    "key_word": "succeed",
+    "synonyms": [
+      "inherit",
+      "take over"
+    ]
+  },
+  {
+    "id": 124,
+    "meaning": "(n) lòng biết ơn, sự nhớ ơn",
+    "key_word": "gratitude",
+    "synonyms": [
+      "thankfulness",
+      "appreciation"
+    ]
+  },
+  {
+    "id": 125,
+    "meaning": "adv. vì thế do đó (thường đứng đầu câu)",
+    "key_word": "accordingly",
+    "synonyms": [
+      "therefore",
+      "consequently",
+      "thus",
+      "hence",
+      "as a result",
+      "so"
+    ]
+  },
+  {
+    "id": 126,
+    "meaning": "adv. Một cách phù hợp (thường đứng cuối câu)",
+    "key_word": "accordingly",
+    "synonyms": [
+      "appropriately",
+      "suitably",
+      "correspondingly"
+    ]
+  },
+  {
+    "id": 127,
+    "meaning": "n. sự thay thế, người thay thế, vật thay thế",
+    "key_word": "Replacement",
+    "synonyms": [
+      "alternative",
+      "Substitute"
+    ]
+  },
+  {
+    "id": 128,
+    "meaning": "n. bản phác thảo",
+    "key_word": "sketch",
+    "synonyms": [
+      "draft",
+      "outline"
+    ]
+  },
+  {
+    "id": 129,
+    "meaning": "n. cuộc thi",
+    "key_word": "contest",
+    "synonyms": [
+      "competition",
+      "match",
+      "tournament",
+      "game",
+      "race"
+    ]
+  },
+  {
+    "id": 130,
+    "meaning": "a. vững chãi, cứng cáp",
+    "key_word": "sturdy",
+    "synonyms": [
+      "firm",
+      "sound"
+    ]
+  },
+  {
+    "id": 131,
+    "meaning": "a. có thể xếp lại, dễ di chuyển",
+    "key_word": "collapsible",
+    "synonyms": [
+      "foldable",
+      "portable",
+      "packable",
+      "retractable",
+      "transportable",
+      "mobile",
+      "compact"
+    ]
+  },
+  {
+    "id": 132,
+    "meaning": "a. đều đặn, vững chắc, ổn định",
+    "key_word": "steady",
+    "synonyms": [
+      "stable",
+      "firm"
+    ]
+  },
+  {
+    "id": 133,
+    "meaning": "adv. Sớm, sắp xảy ra, nhanh chóng sẽ xảy ra",
+    "key_word": "soon",
+    "synonyms": [
+      "shortly",
+      "promtly",
+      "before long",
+      "in no time"
+    ]
+  },
+  {
+    "id": 134,
+    "meaning": "v. diễn ra, xảy ra",
+    "key_word": "take place",
+    "synonyms": [
+      "happen",
+      "occur",
+      "come up",
+      "arise"
+    ]
+  },
+  {
+    "id": 135,
+    "meaning": "noun. quán trọ, khách sạn nhỏ",
+    "key_word": "Inn",
+    "synonyms": [
+      "hotel",
+      "lodge",
+      "accommodation",
+      "hostel",
+      "motel"
+    ]
+  },
+  {
+    "id": 136,
+    "meaning": "nhiều cái gì đó",
+    "key_word": "a ... range of Ns",
+    "synonyms": [
+      "wide",
+      "broad",
+      "diverse",
+      "extensive",
+      "comprehensive"
+    ]
+  },
+  {
+    "id": 137,
+    "meaning": "conj. Bởi vì",
+    "key_word": "because",
+    "synonyms": [
+      "since",
+      "seeing that",
+      "considering that",
+      "given that",
+      "in that",
+      "as",
+      "now that",
+      "in as much as"
+    ]
+  },
+  {
+    "id": 138,
+    "meaning": "miễn phí",
+    "key_word": "complimentary",
+    "synonyms": [
+      "free",
+      "at no charge",
+      "at no fee",
+      "at no cost"
+    ]
+  },
+  {
+    "id": 139,
+    "meaning": "n. giảm giá, ưu đãi",
+    "key_word": "discount",
+    "synonyms": [
+      "voucher",
+      "offer",
+      "promotion",
+      "sale",
+      "special offer"
+    ]
+  },
+  {
+    "id": 140,
+    "meaning": "v. cá nhân hóa, tùy chỉnh theo ý khách hàng",
+    "key_word": "Personalize",
+    "synonyms": [
+      "customize",
+      "individualize",
+      "adjust",
+      "tailor"
+    ]
+  },
+  {
+    "id": 141,
+    "meaning": "adv. Trực tiếp",
+    "key_word": "directly",
+    "synonyms": [
+      "in person",
+      "physically"
+    ]
+  },
+  {
+    "id": 142,
+    "meaning": "trực tuyến, online",
+    "key_word": "online",
+    "synonyms": [
+      "internet",
+      "website",
+      "app",
+      "digitally",
+      "electronically"
+    ]
+  },
+  {
+    "id": 143,
+    "meaning": "a. đa quốc gia, quốc tế, toàn cầu",
+    "key_word": "international",
+    "synonyms": [
+      "multinational",
+      "global",
+      "worldwide",
+      "universal",
+      "intercontinental"
+    ]
+  },
+  {
+    "id": 144,
+    "meaning": "n. chương trình tích điểm",
+    "key_word": "reward program",
+    "synonyms": [
+      "loyalty program",
+      "credits"
+    ]
+  },
+  {
+    "id": 145,
+    "meaning": "n. bóc thăm trúng thưởng, xổ số",
+    "key_word": "drawing",
+    "synonyms": [
+      "lottery",
+      "raffle"
+    ]
+  },
+  {
+    "id": 146,
+    "meaning": "nhóm từ vựng liên quan về khóa học, đào tào",
+    "key_word": "lecture",
+    "synonyms": [
+      "training",
+      "professional",
+      "development",
+      "workshop",
+      "session",
+      "internship",
+      "class",
+      "apprenticeship"
+    ]
+  },
+  {
+    "id": 147,
+    "meaning": "v. trình bày, cho ai thấy cái gì",
+    "key_word": "show",
+    "synonyms": [
+      "present",
+      "display"
+    ]
+  },
+  {
+    "id": 148,
+    "meaning": "nhóm từ vựng liên quan về xin ý kiến khách hàng",
+    "key_word": "...",
+    "synonyms": [
+      "review",
+      "feedback",
+      "opinion",
+      "survey",
+      "poll",
+      "questionnaire",
+      "comment",
+      "response",
+      "data collection",
+      "evaluation"
+    ]
+  },
+  {
+    "id": 149,
+    "meaning": "nhóm từ nói về mức độ nhận diện, sự được biết đến",
+    "key_word": "fame",
+    "synonyms": [
+      "awareness",
+      "visibility",
+      "exposure"
+    ]
+  },
+  {
+    "id": 150,
+    "meaning": "n. công ty, doanh  nghiệp",
+    "key_word": "Inc",
+    "synonyms": [
+      "firm",
+      "company",
+      "business",
+      "enterprise",
+      "establishment",
+      "manufacturer",
+      "maker"
+    ]
+  },
+  {
+    "id": 151,
+    "meaning": "n. nhà hàng, quán ăn",
+    "key_word": "restaurant",
+    "synonyms": [
+      "dining establishment",
+      "diner",
+      "eatery",
+      "café",
+      "cafeteria",
+      "bistro"
+    ]
+  }
+]

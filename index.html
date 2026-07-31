@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEIC Synonym Recall - Active Recall & Matching</title>
+    <meta name="description" content="Website luyện tập từ đồng nghĩa TOEIC phương pháp Active Recall, Gợi nhớ chủ động và Spelling chính xác.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-background">
+        <div class="bg-glow glow-1"></div>
+        <div class="bg-glow glow-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-brand">
+                <div class="brand-logo">
+                    <i data-lucide="brain"></i>
+                </div>
+                <div class="brand-info">
+                    <h1>TOEIC Synonym Recall</h1>
+                    <span class="brand-tag">Active Recall & Reflex System</span>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <button id="btn-theme-toggle" class="btn-icon" title="Đổi giao diện Sáng / Tối">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
+                </button>
+                <div class="srs-badge-header" title="Danh sách từ cần ôn gấp trong Box 1">
+                    <i data-lucide="bookmark-check"></i>
+                    <span>Cần ôn: <strong id="header-box1-count">0</strong></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Screens -->
+        <main class="main-content">
+            
+            <!-- 🏠 1. SETUP SCREEN -->
+            <section id="screen-setup" class="screen active">
+                <div class="hero-banner glass-card">
+                    <div class="hero-badge"><i data-lucide="zap"></i> TOEIC Vocabulary Booster</div>
+                    <h2>Luyện Phản Xạ & Từ Đồng Nghĩa TOEIC</h2>
+                    <p>Học theo trường nghĩa bằng phương pháp gợi nhớ chủ động (Active Recall), nâng cao khả năng nhận diện và gõ đúng chính tả.</p>
+                </div>
+
+                <div class="setup-grid">
+                    <!-- Mode Selection -->
+                    <div class="setup-card glass-card">
+                        <h3><i data-lucide="gamepad-2"></i> 1. Chọn Chế Độ Học</h3>
+                        <div class="mode-options">
+                            <label class="mode-option active" data-mode="mode1">
+                                <input type="radio" name="study-mode" value="mode1" checked>
+                                <div class="mode-icon"><i data-lucide="link"></i></div>
+                                <div class="mode-text">
+                                    <strong>Mode 1: Synonym Chain</strong>
+                                    <span>Kéo - Thả / Select các thẻ từ đồng nghĩa của từ cho trước.</span>
+                                </div>
+                                <div class="check-mark"><i data-lucide="check-circle-2"></i></div>
+                            </label>
+
+                            <label class="mode-option" data-mode="mode2">
+                                <input type="radio" name="study-mode" value="mode2">
+                                <div class="mode-icon"><i data-lucide="keyboard"></i></div>
+                                <div class="mode-text">
+                                    <strong>Mode 2: Meaning to Synonyms</strong>
+                                    <span>Xem nghĩa Tiếng Việt, gõ bàn phím toàn bộ các từ đồng nghĩa.</span>
+                                </div>
+                                <div class="check-mark"><i data-lucide="check-circle-2"></i></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Config Options -->
+                    <div class="setup-card glass-card">
+                        <h3><i data-lucide="sliders"></i> 2. Cấu Hình Phiên Học</h3>
+                        
+                        <div class="config-group">
+                            <label class="config-label">Nguồn từ vựng:</label>
+                            <div class="button-selector" id="source-selector">
+                                <button type="button" class="select-btn active" data-source="all">
+                                    <i data-lucide="library"></i> Tất cả từ vựng (151 bộ)
+                                </button>
+                                <button type="button" class="select-btn" data-source="srs" id="btn-source-srs">
+                                    <i data-lucide="flame"></i> Từ cần ôn gấp (<span id="setup-srs-count">0</span>)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="config-group">
+                            <label class="config-label">Số lượng trường nghĩa (câu hỏi):</label>
+                            <div class="button-selector" id="count-selector">
+                                <button type="button" class="select-btn" data-count="5">5</button>
+                                <button type="button" class="select-btn active" data-count="10">10</button>
+                                <button type="button" class="select-btn" data-count="20">20</button>
+                                <button type="button" class="select-btn" data-count="all">Tất cả</button>
+                            </div>
+                        </div>
+
+                        <button id="btn-start-session" class="btn-primary btn-large">
+                            <span>Bắt Đầu Học Ngay</span>
+                            <i data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🎮 2. PRACTICE SCREEN -->
+            <section id="screen-practice" class="screen">
+                <!-- Practice Top Bar -->
+                <div class="practice-bar glass-card">
+                    <button id="btn-quit-practice" class="btn-secondary btn-sm" title="Thoát về trang chính">
+                        <i data-lucide="x"></i> <span>Thoát</span>
+                    </button>
+
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span id="practice-progress-text">Câu 1 / 10</span>
+                            <span id="practice-score-text">Đúng: 0</span>
+                        </div>
+                        <div class="progress-bar-track">
+                            <div id="practice-progress-fill" class="progress-bar-fill" style="width: 10%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="practice-timer">
+                        <i data-lucide="clock"></i>
+                        <span id="timer-text">00:00</span>
+                    </div>
+                </div>
+
+                <!-- MODE 1 VIEW: SYNONYM CHAIN -->
+                <div id="view-mode1" class="mode-view">
+                    <div class="prompt-card glass-card">
+                        <div class="prompt-label"><i data-lucide="target"></i> HÃY CHỌN TẤT CẢ TỪ ĐỒNG NGHĨA CỦA:</div>
+                        <div class="target-word-container">
+                            <h2 id="mode1-target-word" class="target-word">PROMPTLY</h2>
+                            <span id="mode1-target-meaning" class="target-meaning">adv. Nhanh chóng, kịp thời</span>
+                        </div>
+                        <div class="target-counter">
+                            Cần tìm: <strong id="mode1-found-count">0</strong> / <strong id="mode1-total-count">0</strong> từ
+                        </div>
+                    </div>
+
+                    <!-- Target Drop Zone (Selected Cards) -->
+                    <div class="drop-zone-container glass-card">
+                        <div class="drop-zone-header">
+                            <span><i data-lucide="layers"></i> Vùng Đáp Án Đã Chọn:</span>
+                        </div>
+                        <div id="mode1-selected-cards" class="selected-cards-grid">
+                            <div class="empty-drop-hint">Kéo - thả hoặc click các thẻ từ đồng nghĩa bên dưới vào đây</div>
+                        </div>
+                    </div>
+
+                    <!-- Source Pool Cards -->
+                    <div class="pool-zone-container">
+                        <div class="pool-zone-header">
+                            <span><i data-lucide="grip"></i> Bể Thẻ Từ (Bao gồm từ nhiễu):</span>
+                        </div>
+                        <div id="mode1-pool-cards" class="pool-cards-grid">
+                            <!-- Cards inserted by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODE 2 VIEW: MEANING TO SYNONYMS -->
+                <div id="view-mode2" class="mode-view">
+                    <div class="prompt-card glass-card">
+                        <div class="prompt-label"><i data-lucide="languages"></i> TRƯỜNG NGHĨA TIẾNG VIỆT:</div>
+                        <h2 id="mode2-meaning-title" class="meaning-title">a. nguyên bản, thật</h2>
+                        
+                        <div class="mode2-found-status">
+                            <span>Đã tìm: <strong id="mode2-found-num">0</strong> / <strong id="mode2-total-num">3</strong> từ</span>
+                        </div>
+                    </div>
+
+                    <!-- Word Slots Matrix -->
+                    <div class="slots-container glass-card">
+                        <div id="mode2-slots-grid" class="slots-grid">
+                            <!-- Slots generated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Text Input Box & Action Buttons -->
+                    <div class="input-action-bar glass-card">
+                        <div class="input-wrapper">
+                            <i data-lucide="edit-3" class="input-icon"></i>
+                            <input type="text" id="mode2-input" placeholder="Gõ 1 từ bất kỳ và nhấn Enter..." autocomplete="off" spellcheck="false">
+                            <button id="btn-mode2-submit" class="btn-submit" title="Gửi đáp án (Enter)">
+                                <i data-lucide="arrow-up-right"></i>
+                            </button>
+                        </div>
+
+                        <div class="action-buttons-group">
+                            <button id="btn-mode2-hint" class="btn-action btn-hint" title="Hiển thị gợi ý ký tự đầu của 1 từ chưa tìm được">
+                                <i data-lucide="lightbulb"></i>
+                                <span>Gợi Ý (Hint)</span>
+                            </button>
+                            <button id="btn-mode2-skip" class="btn-action btn-skip" title="Bỏ qua và xem đáp án còn thiếu">
+                                <i data-lucide="eye"></i>
+                                <span>Xem Đáp Án / Bỏ Qua</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 📊 3. RESULT SCREEN -->
+            <section id="screen-result" class="screen">
+                <div class="result-hero glass-card">
+                    <div class="result-badge"><i data-lucide="award"></i> ĐÃ HOÀN THÀNH PHIÊN HỌC</div>
+                    <h2>Tuyệt Vời! Bạn Đã Hoàn Thành Phiên Luyện Tập</h2>
+                    <p id="result-subtitle">Dưới đây là thống kê chi tiết kết quả ghi nhớ của bạn.</p>
+
+                    <!-- Stats Cards Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i data-lucide="check-check"></i></div>
+                            <div class="stat-value" id="res-stat-total">0/0</div>
+                            <div class="stat-label">Số bộ từ luyện tập</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon icon-star"><i data-lucide="star"></i></div>
+                            <div class="stat-value" id="res-stat-perfect">0</div>
+                            <div class="stat-label">Bộ từ hoàn hảo (100%)</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon icon-time"><i data-lucide="timer"></i></div>
+                            <div class="stat-value" id="res-stat-time">00:00</div>
+                            <div class="stat-label">Thời gian làm bài</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon icon-box"><i data-lucide="alert-triangle"></i></div>
+                            <div class="stat-value" id="res-stat-review">0</div>
+                            <div class="stat-label">Cần ôn lại (Box 1)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Section -->
+                <div class="review-container glass-card">
+                    <h3><i data-lucide="list-checks"></i> Danh Sách Chi Tiết Các Bộ Từ Trong Phiên</h3>
+                    <div id="result-items-list" class="review-items-list">
+                        <!-- Items rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Result Actions -->
+                <div class="result-actions">
+                    <button id="btn-result-new" class="btn-primary btn-large">
+                        <i data-lucide="rotate-ccw"></i>
+                        <span>Học Phiên Mới</span>
+                    </button>
+                    <button id="btn-result-review-wrong" class="btn-secondary btn-large">
+                        <i data-lucide="flame"></i>
+                        <span>Chỉ Ôn Lại Các Từ Chưa Đạt</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Audio Effects Generator & Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
