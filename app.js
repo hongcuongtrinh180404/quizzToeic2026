@@ -74,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mode1TotalCount: document.getElementById('mode1-total-count'),
         mode1SelectedCards: document.getElementById('mode1-selected-cards'),
         mode1PoolCards: document.getElementById('mode1-pool-cards'),
+        mode1NextContainer: document.getElementById('mode1-next-container'),
+        btnMode1Next: document.getElementById('btn-mode1-next'),
 
         // Mode 2 Elements
         viewMode2: document.getElementById('view-mode2'),
@@ -205,20 +207,37 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('toeic_theme', theme);
     }
 
-    // Load Vocabulary JSON Data
+    // Load Vocabulary JSON Data (supports fetch & window.TOEIC_VOCAB_DATA fallback for file://)
     async function loadVocabData() {
+        if (window.TOEIC_VOCAB_DATA && Array.isArray(window.TOEIC_VOCAB_DATA) && window.TOEIC_VOCAB_DATA.length > 0) {
+            state.allVocab = window.TOEIC_VOCAB_DATA;
+            console.log(`Loaded ${state.allVocab.length} vocab entries from fallback data.js.`);
+            updateCountBadgeAndMax();
+        }
+
         try {
             const resp = await fetch('data/data.json');
-            state.allVocab = await resp.json();
-            console.log(`Loaded ${state.allVocab.length} vocab entries.`);
-            if (elements.totalCountBadge) {
-                elements.totalCountBadge.textContent = state.allVocab.length;
-            }
-            if (elements.inputSessionCount) {
-                elements.inputSessionCount.max = state.allVocab.length;
+            if (resp.ok) {
+                const fetched = await resp.json();
+                if (Array.isArray(fetched) && fetched.length > 0) {
+                    state.allVocab = fetched;
+                    console.log(`Loaded ${state.allVocab.length} vocab entries from data.json via fetch.`);
+                    updateCountBadgeAndMax();
+                }
             }
         } catch (err) {
-            console.error('Failed to load data.json:', err);
+            console.warn('Fetch data.json failed (normal on file:// protocol). Using data.js fallback.');
+            updateCountBadgeAndMax();
+        }
+    }
+
+    function updateCountBadgeAndMax() {
+        const availableCount = state.sessionSource === 'srs' ? state.srsBox1.size : state.allVocab.length;
+        if (elements.totalCountBadge) {
+            elements.totalCountBadge.textContent = availableCount;
+        }
+        if (elements.inputSessionCount) {
+            elements.inputSessionCount.max = availableCount;
         }
     }
 
@@ -310,6 +329,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Mode 1 Next Button Handler
+        if (elements.btnMode1Next) {
+            elements.btnMode1Next.addEventListener('click', () => {
+                if (elements.mode1NextContainer) {
+                    elements.mode1NextContainer.style.display = 'none';
+                }
+                state.currentIndex++;
+                renderQuestion();
+            });
+        }
+
         // Mode 2 Input Controls
         elements.mode2Input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
@@ -362,6 +392,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Session Execution Logic
     // ----------------------------------------------------------------------
     function startSession() {
+        if (!state.allVocab || state.allVocab.length === 0) {
+            alert('Dữ liệu từ vựng chưa sẵn sàng. Vui lòng làm mới trang (F5)!');
+            return;
+        }
+
         let pool = [];
         if (state.sessionSource === 'srs') {
             pool = state.allVocab.filter(v => state.srsBox1.has(v.id));
@@ -447,6 +482,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------------------------------------------------
     function setupMode1(item) {
         state.mode1Found.clear();
+        state.mode1HasMistake = false;
+        if (elements.mode1NextContainer) {
+            elements.mode1NextContainer.style.display = 'none';
+        }
         
         // Target word
         elements.mode1TargetWord.textContent = item.key_word.toUpperCase();
@@ -532,18 +571,23 @@ document.addEventListener('DOMContentLoaded', () => {
             // Check if 100% found
             if (state.mode1Found.size === state.mode1Targets.length) {
                 playSound('complete');
-                state.perfectCount++;
-                state.resultsLog.push({ item: state.currentQuestion, isPerfect: true });
+                const isPerfect = !state.mode1HasMistake;
+                if (isPerfect) {
+                    state.perfectCount++;
+                }
+                state.resultsLog.push({ item: state.currentQuestion, isPerfect: isPerfect });
 
-                setTimeout(() => {
-                    state.currentIndex++;
-                    renderQuestion();
-                }, 700);
+                // Show Next Button (user must click Next to advance)
+                if (elements.mode1NextContainer) {
+                    elements.mode1NextContainer.style.display = 'flex';
+                    elements.mode1NextContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
             }
         } else {
             // Wrong selection
             playSound('wrong');
             cardElement.classList.add('wrong');
+            state.mode1HasMistake = true;
             
             // Mark item in SRS Box 1 if user made a mistake
             state.srsBox1.add(state.currentQuestion.id);

@@ -790,6 +790,21 @@ body {
     animation: shake 0.4s ease-in-out;
 }
 
+/* Mode 1 Next Button Wrapper */
+.mode1-next-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glow-btn {
+    box-shadow: 0 0 28px var(--brand-glow), 0 8px 24px var(--brand-glow);
+    font-size: 1.15rem;
+    padding: 16px 48px;
+    border-radius: var(--radius-lg);
+}
+
 /* MODE 2: Slots Matrix & Input */
 .meaning-title {
     font-family: var(--font-heading);
