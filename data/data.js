@@ -678,7 +678,10 @@ window.TOEIC_VOCAB_DATA = [
       "settle",
       "tackle with",
       "solve",
-      "resolve"
+      "resolve",
+      "take care",
+      "fix",
+      "process"
     ]
   },
   {
@@ -1247,7 +1250,9 @@ window.TOEIC_VOCAB_DATA = [
     "synonyms": [
       "responsibility",
       "mission",
-      "task"
+      "task",
+      "assignment"
+
     ]
   },
   {
@@ -1391,7 +1396,9 @@ window.TOEIC_VOCAB_DATA = [
     "key_word": "sketch",
     "synonyms": [
       "draft",
-      "outline"
+      "outline",
+      "script",
+      "manuscript"
     ]
   },
   {
@@ -1777,7 +1784,11 @@ window.TOEIC_VOCAB_DATA = [
     "meaning": "sắp xếp",
     "key_word": "arrange",
     "synonyms": [
-      "organize"
+      "organize",
+      "plan",
+      "host",
+      "hold",
+      "set up"
     ]
   },
   {
@@ -1792,10 +1803,12 @@ window.TOEIC_VOCAB_DATA = [
   },
   {
     "id": 167,
-    "meaning": "nhiệm vụ",
-    "key_word": "assignment",
+    "meaning": "chọn, lựa",
+    "key_word": "choose",
     "synonyms": [
-      "task"
+      "select",
+      "elect",
+      "opt"
     ]
   },
   {
@@ -2392,7 +2405,10 @@ window.TOEIC_VOCAB_DATA = [
     "synonyms": [
       "product",
       "item",
-      "material"
+      "material",
+      "goods",
+      "produce",
+      "stock"
     ]
   },
   {
@@ -2795,7 +2811,13 @@ window.TOEIC_VOCAB_DATA = [
     "key_word": "reveal",
     "synonyms": [
       "unveil",
-      "disclose"
+      "disclose",
+      "release",
+      "show",
+      "expose",
+      "publish",
+      "issue",
+      "launch"
     ]
   },
   {
@@ -2845,11 +2867,12 @@ window.TOEIC_VOCAB_DATA = [
   },
   {
     "id": 286,
-    "meaning": "giải quyết",
-    "key_word": "solve",
+    "meaning": "nhà máy",
+    "key_word": "factory",
     "synonyms": [
-      "address",
-      "resolve"
+      "plant",
+      "facility",
+      "manufacturer"
     ]
   },
   {
@@ -2867,7 +2890,8 @@ window.TOEIC_VOCAB_DATA = [
     "key_word": "submit",
     "synonyms": [
       "hand in",
-      "file"
+      "file",
+      "turn in"
     ]
   },
   {
