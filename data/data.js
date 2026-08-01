@@ -2367,10 +2367,11 @@ window.TOEIC_VOCAB_DATA = [
   },
   {
     "id": 233,
-    "meaning": "đáp áp (nhu cầu)",
-    "key_word": "meet (demand",
+    "meaning": "đáp ứng (nhu cầu)",
+    "key_word": "meet",
     "synonyms": [
-      "requirement)",
+      "satisfy",
+      "fulfill",
       "accommodate"
     ]
   },
