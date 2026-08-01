@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="vi" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOEIC Synonym Recall - Active Recall & Matching</title>
-    <meta name="description" content="Website luyện tập từ đồng nghĩa TOEIC phương pháp Active Recall, Gợi nhớ chủ động và Spelling chính xác.">
+    <meta name="description"
+        content="Website luyện tập từ đồng nghĩa TOEIC phương pháp Active Recall, Gợi nhớ chủ động và Spelling chính xác.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+        rel="stylesheet">
     <!-- Icons (Lucide) -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="app-background">
         <div class="bg-glow glow-1"></div>
@@ -28,7 +33,7 @@
                 </div>
                 <div class="brand-info">
                     <h1>TOEIC Synonym Recall</h1>
-                    <span class="brand-tag">Active Recall & Reflex System</span>
+                    <span class="brand-tag">Active Recall & Reflex System 08</span>
                 </div>
             </div>
 
@@ -46,13 +51,14 @@
 
         <!-- Main Content Screens -->
         <main class="main-content">
-            
+
             <!-- 🏠 1. SETUP SCREEN -->
             <section id="screen-setup" class="screen active">
                 <div class="hero-banner glass-card">
                     <div class="hero-badge"><i data-lucide="zap"></i> TOEIC Vocabulary Booster</div>
                     <h2>Luyện Phản Xạ & Từ Đồng Nghĩa TOEIC</h2>
-                    <p>Học theo trường nghĩa bằng phương pháp gợi nhớ chủ động (Active Recall), nâng cao khả năng nhận diện và gõ đúng chính tả.</p>
+                    <p>Học theo trường nghĩa bằng phương pháp gợi nhớ chủ động (Active Recall), nâng cao khả năng nhận
+                        diện và gõ đúng chính tả.</p>
                 </div>
 
                 <div class="setup-grid">
@@ -85,7 +91,7 @@
                     <!-- Config Options -->
                     <div class="setup-card glass-card">
                         <h3><i data-lucide="sliders"></i> 2. Cấu Hình Phiên Học</h3>
-                        
+
                         <div class="config-group">
                             <label class="config-label">Nguồn từ vựng:</label>
                             <div class="button-selector" id="source-selector">
@@ -99,10 +105,13 @@
                         </div>
 
                         <div class="config-group">
-                            <label class="config-label" for="input-session-count">Nhập số lượng trường nghĩa (số câu hỏi):</label>
+                            <label class="config-label" for="input-session-count">Nhập số lượng trường nghĩa (số câu
+                                hỏi):</label>
                             <div class="custom-count-wrapper">
-                                <input type="number" id="input-session-count" class="count-number-input" min="1" max="151" value="10" placeholder="Nhập số câu...">
-                                <button type="button" id="btn-count-all" class="btn-all-count" title="Chọn toàn bộ từ vựng trong danh sách">
+                                <input type="number" id="input-session-count" class="count-number-input" min="1"
+                                    max="151" value="10" placeholder="Nhập số câu...">
+                                <button type="button" id="btn-count-all" class="btn-all-count"
+                                    title="Chọn toàn bộ từ vựng trong danh sách">
                                     <i data-lucide="layers"></i> Tất cả (<span id="total-count-badge">151</span>)
                                 </button>
                             </div>
@@ -158,7 +167,8 @@
                             <span id="mode1-target-meaning" class="target-meaning">adv. Nhanh chóng, kịp thời</span>
                         </div>
                         <div class="target-counter">
-                            Cần tìm: <strong id="mode1-found-count">0</strong> / <strong id="mode1-total-count">0</strong> từ
+                            Cần tìm: <strong id="mode1-found-count">0</strong> / <strong
+                                id="mode1-total-count">0</strong> từ
                         </div>
                     </div>
 
@@ -168,7 +178,8 @@
                             <span><i data-lucide="layers"></i> Vùng Đáp Án Đã Chọn:</span>
                         </div>
                         <div id="mode1-selected-cards" class="selected-cards-grid">
-                            <div class="empty-drop-hint">Kéo - thả hoặc click các thẻ từ đồng nghĩa bên dưới vào đây</div>
+                            <div class="empty-drop-hint">Kéo - thả hoặc click các thẻ từ đồng nghĩa bên dưới vào đây
+                            </div>
                         </div>
                     </div>
 
@@ -196,9 +207,10 @@
                     <div class="prompt-card glass-card">
                         <div class="prompt-label"><i data-lucide="languages"></i> TRƯỜNG NGHĨA TIẾNG VIỆT:</div>
                         <h2 id="mode2-meaning-title" class="meaning-title">a. nguyên bản, thật</h2>
-                        
+
                         <div class="mode2-found-status">
-                            <span>Đã tìm: <strong id="mode2-found-num">0</strong> / <strong id="mode2-total-num">3</strong> từ</span>
+                            <span>Đã tìm: <strong id="mode2-found-num">0</strong> / <strong
+                                    id="mode2-total-num">3</strong> từ</span>
                         </div>
                     </div>
 
@@ -213,18 +225,21 @@
                     <div class="input-action-bar glass-card">
                         <div class="input-wrapper">
                             <i data-lucide="edit-3" class="input-icon"></i>
-                            <input type="text" id="mode2-input" placeholder="Gõ 1 từ bất kỳ và nhấn Enter..." autocomplete="off" spellcheck="false">
+                            <input type="text" id="mode2-input" placeholder="Gõ 1 từ bất kỳ và nhấn Enter..."
+                                autocomplete="off" spellcheck="false">
                             <button id="btn-mode2-submit" class="btn-submit" title="Gửi đáp án (Enter)">
                                 <i data-lucide="arrow-up-right"></i>
                             </button>
                         </div>
 
                         <div class="action-buttons-group">
-                            <button id="btn-mode2-hint" class="btn-action btn-hint" title="Hiển thị từng chữ cái 1 của từ chưa tìm được">
+                            <button id="btn-mode2-hint" class="btn-action btn-hint"
+                                title="Hiển thị từng chữ cái 1 của từ chưa tìm được">
                                 <i data-lucide="lightbulb"></i>
                                 <span>Gợi Ý (Hint)</span>
                             </button>
-                            <button id="btn-mode2-skip" class="btn-action btn-skip" title="Bỏ qua và xem đáp án còn thiếu">
+                            <button id="btn-mode2-skip" class="btn-action btn-skip"
+                                title="Bỏ qua và xem đáp án còn thiếu">
                                 <i data-lucide="eye"></i>
                                 <span>Xem Đáp Án / Bỏ Qua</span>
                             </button>
@@ -295,4 +310,5 @@
     <script src="data/data.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
