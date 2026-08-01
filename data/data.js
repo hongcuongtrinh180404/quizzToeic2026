@@ -2059,7 +2059,7 @@ window.TOEIC_VOCAB_DATA = [
     "meaning": "chuyên về, giỏi về",
     "key_word": "excel at",
     "synonyms": [
-      "in",
+      "be expert in",
       "specialzie in",
       "major in"
     ]
@@ -2498,7 +2498,14 @@ window.TOEIC_VOCAB_DATA = [
     "meaning": "khách hàng quen",
     "key_word": "patron",
     "synonyms": [
-      "regular customer"
+      "regular customer",
+      "customer",
+      "client",
+      "guest",
+      "shopper",
+      "consumer",
+      "buyer",
+      "visitor"
     ]
   },
   {
@@ -2547,7 +2554,7 @@ window.TOEIC_VOCAB_DATA = [
     "meaning": "cấm",
     "key_word": "prohibit",
     "synonyms": [
-      "forbit",
+      "forbid",
       "ban"
     ]
   },

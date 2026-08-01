@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mode1Found: new Set(),
         mode1Targets: [],
         mode2Revealed: new Map(), // word -> boolean
+        mode2HintChars: new Map(), // word -> number of hint letters revealed
         mode2UsedHint: false,
         mode2UsedSkip: false,
 
@@ -503,16 +504,22 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="empty-drop-hint">Kéo - thả hoặc click các thẻ từ đồng nghĩa bên dưới vào đây</div>
         `;
 
-        // Pick Distractor words from other vocab items
+        // Pick 10 Distractor words from other vocab items
         const otherItems = state.allVocab.filter(v => v.id !== item.id);
         const distractorWords = [];
-        const numDistractors = Math.max(3, Math.min(6, Math.floor(correctSynonyms.length * 1.5)));
+        const numDistractors = 10;
+        const currentItemAllWords = [item.key_word, ...item.synonyms].map(sanitize);
 
-        while (distractorWords.length < numDistractors && otherItems.length > 0) {
+        let maxAttempts = 300;
+        while (distractorWords.length < numDistractors && otherItems.length > 0 && maxAttempts > 0) {
+            maxAttempts--;
             const randomItem = otherItems[Math.floor(Math.random() * otherItems.length)];
             const allWordsInItem = [randomItem.key_word, ...randomItem.synonyms];
             const randomWord = allWordsInItem[Math.floor(Math.random() * allWordsInItem.length)];
-            if (randomWord && !correctSynonyms.includes(randomWord) && !distractorWords.includes(randomWord)) {
+            const sanitizedRandomWord = sanitize(randomWord);
+            if (sanitizedRandomWord && 
+                !currentItemAllWords.includes(sanitizedRandomWord) && 
+                !distractorWords.some(w => sanitize(w) === sanitizedRandomWord)) {
                 distractorWords.push(randomWord);
             }
         }
@@ -600,34 +607,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------------
+    // ----------------------------------------------------------------------
     // 7. MODE 2: Meaning to Synonyms (Active Recall Keyboard Typing)
     // ----------------------------------------------------------------------
+    let mode2ActiveTargets = [];
+
     function setupMode2(item) {
         state.mode2Revealed.clear();
+        state.mode2HintChars.clear();
         state.mode2UsedHint = false;
         state.mode2UsedSkip = false;
 
         // All target words for this item (key_word + synonyms)
-        const allTargets = [item.key_word, ...item.synonyms].map(s => s.trim()).filter(Boolean);
-        allTargets.forEach(w => state.mode2Revealed.set(w, false));
+        mode2ActiveTargets = [item.key_word, ...item.synonyms].map(s => s.trim()).filter(Boolean);
+        mode2ActiveTargets.forEach(w => {
+            state.mode2Revealed.set(w, false);
+            state.mode2HintChars.set(w, 0);
+        });
 
         elements.mode2MeaningTitle.textContent = item.meaning;
         elements.mode2FoundNum.textContent = '0';
-        elements.mode2TotalNum.textContent = allTargets.length;
+        elements.mode2TotalNum.textContent = mode2ActiveTargets.length;
         elements.mode2Input.value = '';
         elements.mode2Input.classList.remove('input-error');
         elements.mode2Input.focus();
 
         // Render Slots Matrix
-        renderMode2Slots(allTargets);
+        renderMode2Slots(mode2ActiveTargets);
+    }
+
+    function getSlotClass(targetWord, status) {
+        let cls = 'word-slot';
+        if (targetWord && targetWord.length > 12) {
+            cls += ' slot-long';
+        }
+        if (status && status !== 'normal') {
+            cls += ' ' + status;
+        }
+        return cls;
+    }
+
+    function getHintText(targetWord, hintCount) {
+        let nonSpaceRevealed = 0;
+        const words = targetWord.split(' ');
+        
+        const formattedWords = words.map(word => {
+            const charArr = [];
+            for (let i = 0; i < word.length; i++) {
+                const char = word[i];
+                if (nonSpaceRevealed < hintCount) {
+                    charArr.push(char);
+                    nonSpaceRevealed++;
+                } else {
+                    charArr.push('_');
+                }
+            }
+            return charArr.join(' ');
+        });
+
+        return formattedWords.join('\u00A0\u00A0\u00A0');
+    }
+
+    function getSlotElementByWord(targetWord) {
+        return Array.from(elements.mode2SlotsGrid.children).find(child => child.dataset.word === targetWord);
     }
 
     function renderMode2Slots(allTargets) {
         elements.mode2SlotsGrid.innerHTML = '';
         allTargets.forEach((targetWord, index) => {
             const isRevealed = state.mode2Revealed.get(targetWord);
+            const hintCount = state.mode2HintChars.get(targetWord) || 0;
+
+            let status = 'normal';
+            if (isRevealed) {
+                status = 'revealed';
+            } else if (hintCount > 0) {
+                status = 'partial-hint';
+            }
+
             const slot = document.createElement('div');
-            slot.className = `word-slot ${isRevealed ? 'revealed' : ''}`;
+            slot.className = getSlotClass(targetWord, status);
             slot.dataset.word = targetWord;
 
             const indexTag = document.createElement('span');
@@ -642,7 +701,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 const placeholder = document.createElement('span');
                 placeholder.className = 'slot-hint-text';
-                placeholder.textContent = '_ '.repeat(targetWord.length).trim();
+                placeholder.textContent = getHintText(targetWord, hintCount);
                 slot.appendChild(placeholder);
             }
 
@@ -662,13 +721,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Correct & Unrevealed!
                     matchFound = true;
                     state.mode2Revealed.set(targetWord, true);
+                    const totalNonSpace = targetWord.replace(/\s+/g, '').length;
+                    state.mode2HintChars.set(targetWord, totalNonSpace);
                     playSound('correct');
 
                     // Update UI slot
-                    const slot = elements.mode2SlotsGrid.querySelector(`[data-word="${targetWord}"]`);
+                    const slot = getSlotElementByWord(targetWord);
                     if (slot) {
-                        slot.classList.add('revealed');
-                        slot.innerHTML = `<span class="slot-index-tag">#</span><span>${targetWord}</span>`;
+                        const wordIndex = mode2ActiveTargets.indexOf(targetWord) + 1;
+                        slot.className = getSlotClass(targetWord, 'revealed');
+                        slot.innerHTML = `<span class="slot-index-tag">#${wordIndex}</span><span>${targetWord}</span>`;
                     }
 
                     // Clear input
@@ -721,21 +783,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleMode2Hint() {
+        // Find first unrevealed word
+        let targetWordToHint = null;
+        for (const [targetWord, isRevealed] of state.mode2Revealed.entries()) {
+            if (!isRevealed) {
+                targetWordToHint = targetWord;
+                break;
+            }
+        }
+
+        if (!targetWordToHint) return;
+
         state.mode2UsedHint = true;
         playSound('hint');
 
-        // Find first unrevealed word
-        for (const [targetWord, isRevealed] of state.mode2Revealed.entries()) {
-            if (!isRevealed) {
-                // Reveal 1 hint word completely
-                state.mode2Revealed.set(targetWord, true);
+        const totalNonSpace = targetWordToHint.replace(/\s+/g, '').length;
+        const currentHintCount = state.mode2HintChars.get(targetWordToHint) || 0;
+        const newHintCount = currentHintCount + 1;
+        state.mode2HintChars.set(targetWordToHint, newHintCount);
 
-                const slot = elements.mode2SlotsGrid.querySelector(`[data-word="${targetWord}"]`);
-                if (slot) {
-                    slot.className = 'word-slot revealed-hint';
-                    slot.innerHTML = `<span class="slot-index-tag">#</span><span>${targetWord}</span>`;
+        const slot = getSlotElementByWord(targetWordToHint);
+        const wordIndex = mode2ActiveTargets.indexOf(targetWordToHint) + 1;
+
+        if (newHintCount >= totalNonSpace) {
+            // Reveal 1 hint word completely
+            state.mode2Revealed.set(targetWordToHint, true);
+
+            if (slot) {
+                slot.className = getSlotClass(targetWordToHint, 'revealed-hint');
+                slot.innerHTML = `<span class="slot-index-tag">#${wordIndex}</span><span>${targetWordToHint}</span>`;
+            }
+        } else {
+            // Partial hint: reveal 1 more character
+            if (slot) {
+                slot.className = getSlotClass(targetWordToHint, 'partial-hint');
+                const hintTextSpan = slot.querySelector('.slot-hint-text');
+                if (hintTextSpan) {
+                    hintTextSpan.textContent = getHintText(targetWordToHint, newHintCount);
                 }
-                break;
             }
         }
 
@@ -777,10 +862,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reveal all missing words
         for (const targetWord of state.mode2Revealed.keys()) {
             state.mode2Revealed.set(targetWord, true);
-            const slot = elements.mode2SlotsGrid.querySelector(`[data-word="${targetWord}"]`);
+            const totalNonSpace = targetWord.replace(/\s+/g, '').length;
+            state.mode2HintChars.set(targetWord, totalNonSpace);
+            const slot = getSlotElementByWord(targetWord);
             if (slot) {
-                slot.className = 'word-slot skipped';
-                slot.innerHTML = `<span class="slot-index-tag">#</span><span>${targetWord}</span>`;
+                const wordIndex = mode2ActiveTargets.indexOf(targetWord) + 1;
+                slot.className = getSlotClass(targetWord, 'skipped');
+                slot.innerHTML = `<span class="slot-index-tag">#${wordIndex}</span><span>${targetWord}</span>`;
             }
         }
 
