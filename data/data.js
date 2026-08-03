@@ -401,7 +401,7 @@ window.TOEIC_VOCAB_DATA = [
   },
   {
     "id": 36,
-    "meaning": "Chưa có nghĩa",
+    "meaning": "thông báo",
     "key_word": "inform",
     "synonyms": [
       "advise",
@@ -2238,19 +2238,6 @@ window.TOEIC_VOCAB_DATA = [
     "synonyms": [
       "as a result of",
       "because of"
-    ]
-  },
-  {
-    "id": 217,
-    "meaning": "công ty, tập đoàn, doanh nghiệp",
-    "key_word": "Inc",
-    "synonyms": [
-      "company",
-      "corporate",
-      "entreprenuer",
-      "firm",
-      "manufacturer",
-      "enterprise"
     ]
   },
   {
