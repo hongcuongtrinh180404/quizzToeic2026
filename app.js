@@ -35,7 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
         mode2UsedSkip: false,
 
         // Session Results History
-        resultsLog: [] // Array of { item, isPerfect, usedHint, usedSkip }
+        resultsLog: [], // Array of { item, isPerfect, usedHint, usedSkip }
+
+        // Mode 3 (Vocab Management) State
+        vocabEditItem: null
     };
 
     // DOM Elements
@@ -50,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         screenSetup: document.getElementById('screen-setup'),
         screenPractice: document.getElementById('screen-practice'),
         screenResult: document.getElementById('screen-result'),
+        screenVocabManage: document.getElementById('screen-vocab-manage'),
 
         // Setup Controls
         modeOptions: document.querySelectorAll('.mode-option'),
@@ -96,7 +100,29 @@ document.addEventListener('DOMContentLoaded', () => {
         resStatReview: document.getElementById('res-stat-review'),
         resultItemsList: document.getElementById('result-items-list'),
         btnResultNew: document.getElementById('btn-result-new'),
-        btnResultReviewWrong: document.getElementById('btn-result-review-wrong')
+        btnResultReviewWrong: document.getElementById('btn-result-review-wrong'),
+
+        // Mode 3 (Vocab Management) Elements
+        vocabTotalCount: document.getElementById('vocab-total-count'),
+        btnVocabBack: document.getElementById('btn-vocab-back'),
+        btnVocabResetDefault: document.getElementById('btn-vocab-reset-default'),
+        btnAddVocabModal: document.getElementById('btn-add-vocab-modal'),
+        vocabSearchInput: document.getElementById('vocab-search-input'),
+        btnVocabSearchClear: document.getElementById('btn-vocab-search-clear'),
+        vocabSearchStatsText: document.getElementById('vocab-search-stats-text'),
+        vocabListGrid: document.getElementById('vocab-list-grid'),
+
+        // Vocab Modal Form Elements
+        modalVocabForm: document.getElementById('modal-vocab-form'),
+        modalVocabTitle: document.getElementById('modal-vocab-title'),
+        btnCloseVocabModal: document.getElementById('btn-close-vocab-modal'),
+        btnCancelVocabModal: document.getElementById('btn-cancel-vocab-modal'),
+        vocabForm: document.getElementById('vocab-form'),
+        inputVocabEditId: document.getElementById('input-vocab-edit-id'),
+        inputVocabKeyword: document.getElementById('input-vocab-keyword'),
+        inputVocabMeaning: document.getElementById('input-vocab-meaning'),
+        inputVocabSynonyms: document.getElementById('input-vocab-synonyms'),
+        btnSaveVocabModal: document.getElementById('btn-save-vocab-modal')
     };
 
     // ----------------------------------------------------------------------
@@ -208,14 +234,40 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('toeic_theme', theme);
     }
 
-    // Load Vocabulary JSON Data (supports fetch & window.TOEIC_VOCAB_DATA fallback for file://)
+    function saveVocabStorage() {
+        localStorage.setItem('toeic_vocab_custom_data', JSON.stringify(state.allVocab));
+        updateCountBadgeAndMax();
+        if (elements.vocabTotalCount) {
+            elements.vocabTotalCount.textContent = state.allVocab.length;
+        }
+    }
+
+    // Load Vocabulary JSON Data (supports custom localStorage, fetch & window.TOEIC_VOCAB_DATA fallback)
     async function loadVocabData() {
+        // Priority 1: Custom vocab saved in localStorage
+        const savedCustom = localStorage.getItem('toeic_vocab_custom_data');
+        if (savedCustom) {
+            try {
+                const parsed = JSON.parse(savedCustom);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    state.allVocab = parsed;
+                    console.log(`Loaded ${state.allVocab.length} custom vocab entries from localStorage.`);
+                    updateCountBadgeAndMax();
+                    return;
+                }
+            } catch (e) {
+                console.error("Failed to parse custom vocab from localStorage", e);
+            }
+        }
+
+        // Priority 2: window.TOEIC_VOCAB_DATA fallback
         if (window.TOEIC_VOCAB_DATA && Array.isArray(window.TOEIC_VOCAB_DATA) && window.TOEIC_VOCAB_DATA.length > 0) {
-            state.allVocab = window.TOEIC_VOCAB_DATA;
+            state.allVocab = JSON.parse(JSON.stringify(window.TOEIC_VOCAB_DATA));
             console.log(`Loaded ${state.allVocab.length} vocab entries from fallback data.js.`);
             updateCountBadgeAndMax();
         }
 
+        // Priority 3: fetch data.json
         try {
             const resp = await fetch('data/data.json');
             if (resp.ok) {
@@ -360,6 +412,38 @@ document.addEventListener('DOMContentLoaded', () => {
             state.sessionSource = 'srs';
             startSession();
         });
+
+        // Mode 3 (Vocab Management) Listeners
+        if (elements.btnVocabBack) {
+            elements.btnVocabBack.addEventListener('click', () => switchScreen('setup'));
+        }
+        if (elements.btnVocabResetDefault) {
+            elements.btnVocabResetDefault.addEventListener('click', handleResetDefaultVocab);
+        }
+        if (elements.btnAddVocabModal) {
+            elements.btnAddVocabModal.addEventListener('click', () => openVocabModal(null));
+        }
+        if (elements.vocabSearchInput) {
+            elements.vocabSearchInput.addEventListener('input', renderVocabList);
+        }
+        if (elements.btnVocabSearchClear) {
+            elements.btnVocabSearchClear.addEventListener('click', () => {
+                elements.vocabSearchInput.value = '';
+                renderVocabList();
+            });
+        }
+        if (elements.btnCloseVocabModal) {
+            elements.btnCloseVocabModal.addEventListener('click', closeVocabModal);
+        }
+        if (elements.btnCancelVocabModal) {
+            elements.btnCancelVocabModal.addEventListener('click', closeVocabModal);
+        }
+        if (elements.vocabForm) {
+            elements.vocabForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleVocabFormSubmit();
+            });
+        }
     }
 
     function switchScreen(screenName) {
@@ -370,6 +454,11 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.screenPractice.classList.add('active');
         } else if (screenName === 'result') {
             elements.screenResult.classList.add('active');
+        } else if (screenName === 'vocab-manage') {
+            if (elements.screenVocabManage) {
+                elements.screenVocabManage.classList.add('active');
+            }
+            renderVocabList();
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -393,6 +482,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Session Execution Logic
     // ----------------------------------------------------------------------
     function startSession() {
+        if (state.sessionMode === 'mode3') {
+            switchScreen('vocab-manage');
+            return;
+        }
+
         if (!state.allVocab || state.allVocab.length === 0) {
             alert('Dữ liệu từ vựng chưa sẵn sàng. Vui lòng làm mới trang (F5)!');
             return;
@@ -933,6 +1027,284 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         switchScreen('result');
+    }
+
+    // ----------------------------------------------------------------------
+    // 6. Mode 3: Vocabulary Management (CRUD & Search) Logic
+    // ----------------------------------------------------------------------
+    function renderVocabList() {
+        if (!elements.vocabListGrid) return;
+
+        const rawQuery = elements.vocabSearchInput ? elements.vocabSearchInput.value : '';
+        const query = sanitize(rawQuery);
+
+        // Show/hide clear search button
+        if (elements.btnVocabSearchClear) {
+            elements.btnVocabSearchClear.style.display = rawQuery.length > 0 ? 'flex' : 'none';
+        }
+
+        // Filter allVocab by id, key_word, meaning, synonyms
+        const filtered = state.allVocab.filter(item => {
+            if (!query) return true;
+            if (String(item.id).includes(query)) return true;
+            if (sanitize(item.key_word).includes(query)) return true;
+            if (sanitize(item.meaning).includes(query)) return true;
+            if (Array.isArray(item.synonyms) && item.synonyms.some(s => sanitize(s).includes(query))) return true;
+            return false;
+        });
+
+        // Update counters
+        if (elements.vocabTotalCount) {
+            elements.vocabTotalCount.textContent = state.allVocab.length;
+        }
+        if (elements.vocabSearchStatsText) {
+            elements.vocabSearchStatsText.textContent = `Hiển thị ${filtered.length} / ${state.allVocab.length} từ`;
+        }
+
+        elements.vocabListGrid.innerHTML = '';
+
+        if (filtered.length === 0) {
+            elements.vocabListGrid.innerHTML = `
+                <div class="glass-card" style="grid-column: 1 / -1; padding: 48px 24px; text-align: center; color: var(--text-muted);">
+                    <i data-lucide="search-x" style="width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.5;"></i>
+                    <p style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Không tìm thấy từ vựng phù hợp</p>
+                    <span>Không tìm thấy từ nào khớp với từ khóa "${rawQuery}". Vui lòng thử từ khóa khác.</span>
+                </div>
+            `;
+            if (window.lucide) lucide.createIcons();
+            return;
+        }
+
+        filtered.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'vocab-card glass-card';
+            card.dataset.id = item.id;
+
+            const synonymChips = (item.synonyms || []).map(syn => `
+                <span class="synonym-chip">
+                    <span>${syn}</span>
+                    <button type="button" class="btn-remove-synonym" data-id="${item.id}" data-syn="${syn.replace(/"/g, '&quot;')}" title="Xóa từ đồng nghĩa '${syn}'">
+                        <i data-lucide="x" style="width: 14px; height: 14px;"></i>
+                    </button>
+                </span>
+            `).join('');
+
+            card.innerHTML = `
+                <div class="vocab-card-header">
+                    <span class="vocab-card-id-badge">ID #${item.id}</span>
+                    <div class="vocab-card-actions">
+                        <button type="button" class="btn-icon btn-edit-vocab" data-id="${item.id}" title="Sửa thông tin từ này">
+                            <i data-lucide="edit-2" style="width: 16px; height: 16px;"></i>
+                        </button>
+                        <button type="button" class="btn-icon btn-delete-vocab" data-id="${item.id}" title="Xóa từ này" style="color: var(--accent-error);">
+                            <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="vocab-card-body">
+                    <div class="vocab-card-keyword">${item.key_word}</div>
+                    <div class="vocab-card-meaning">${item.meaning}</div>
+                </div>
+
+                <div class="vocab-card-synonyms-section">
+                    <div class="synonyms-label">
+                        <span>Từ đồng nghĩa (${(item.synonyms || []).length})</span>
+                    </div>
+                    <div class="synonyms-chips-list">
+                        ${synonymChips || '<span style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;">Chưa có từ đồng nghĩa</span>'}
+                    </div>
+
+                    <form class="quick-add-synonym-form" data-id="${item.id}" onsubmit="return false;">
+                        <input type="text" class="quick-add-synonym-input" placeholder="+ Thêm synonym mới..." autocomplete="off">
+                        <button type="submit" class="btn-primary btn-sm" style="padding: 6px 12px; border-radius: 14px; font-size: 0.8rem;">
+                            <i data-lucide="plus" style="width: 14px; height: 14px;"></i>
+                        </button>
+                    </form>
+                </div>
+            `;
+
+            elements.vocabListGrid.appendChild(card);
+        });
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        attachVocabCardListeners();
+    }
+
+    function attachVocabCardListeners() {
+        if (!elements.vocabListGrid) return;
+
+        // Delete synonym button
+        elements.vocabListGrid.querySelectorAll('.btn-remove-synonym').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.dataset.id, 10);
+                const synToRemove = btn.dataset.syn;
+                removeSynonymFromWord(id, synToRemove);
+            });
+        });
+
+        // Quick Add Synonym Form
+        elements.vocabListGrid.querySelectorAll('.quick-add-synonym-form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const id = parseInt(form.dataset.id, 10);
+                const input = form.querySelector('.quick-add-synonym-input');
+                const val = (input ? input.value : '').trim();
+                if (val) {
+                    addSynonymToWord(id, val);
+                    input.value = '';
+                }
+            });
+        });
+
+        // Edit Vocab Button
+        elements.vocabListGrid.querySelectorAll('.btn-edit-vocab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = parseInt(btn.dataset.id, 10);
+                const item = state.allVocab.find(v => v.id === id);
+                if (item) {
+                    openVocabModal(item);
+                }
+            });
+        });
+
+        // Delete Vocab Button
+        elements.vocabListGrid.querySelectorAll('.btn-delete-vocab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = parseInt(btn.dataset.id, 10);
+                deleteVocabItem(id);
+            });
+        });
+    }
+
+    function removeSynonymFromWord(id, synToRemove) {
+        const item = state.allVocab.find(v => v.id === id);
+        if (!item) return;
+
+        if (Array.isArray(item.synonyms)) {
+            item.synonyms = item.synonyms.filter(s => s.trim().toLowerCase() !== synToRemove.trim().toLowerCase());
+            saveVocabStorage();
+            renderVocabList();
+        }
+    }
+
+    function addSynonymToWord(id, newSynonym) {
+        const item = state.allVocab.find(v => v.id === id);
+        if (!item) return;
+
+        if (!Array.isArray(item.synonyms)) {
+            item.synonyms = [];
+        }
+
+        const trimmed = newSynonym.trim();
+        if (!trimmed) return;
+
+        const exists = item.synonyms.some(s => s.trim().toLowerCase() === trimmed.toLowerCase());
+        if (exists) {
+            alert(`Từ đồng nghĩa "${trimmed}" đã tồn tại trong từ này.`);
+            return;
+        }
+
+        item.synonyms.push(trimmed);
+        saveVocabStorage();
+        renderVocabList();
+    }
+
+    function deleteVocabItem(id) {
+        const item = state.allVocab.find(v => v.id === id);
+        if (!item) return;
+
+        if (confirm(`Bạn có chắc chắn muốn xóa từ ID #${item.id} (${item.key_word})?`)) {
+            state.allVocab = state.allVocab.filter(v => v.id !== id);
+            saveVocabStorage();
+            renderVocabList();
+        }
+    }
+
+    function openVocabModal(itemToEdit = null) {
+        state.vocabEditItem = itemToEdit;
+        if (itemToEdit) {
+            elements.modalVocabTitle.innerHTML = `<i data-lucide="edit-3"></i> Chỉnh Sửa Từ Vựng (ID #${itemToEdit.id})`;
+            elements.inputVocabEditId.value = itemToEdit.id;
+            elements.inputVocabKeyword.value = itemToEdit.key_word || '';
+            elements.inputVocabMeaning.value = itemToEdit.meaning || '';
+            elements.inputVocabSynonyms.value = (itemToEdit.synonyms || []).join(', ');
+        } else {
+            elements.modalVocabTitle.innerHTML = `<i data-lucide="plus-circle"></i> Thêm Từ Vựng Mới`;
+            elements.inputVocabEditId.value = '';
+            elements.inputVocabKeyword.value = '';
+            elements.inputVocabMeaning.value = '';
+            elements.inputVocabSynonyms.value = '';
+        }
+
+        if (window.lucide) lucide.createIcons();
+        elements.modalVocabForm.style.display = 'flex';
+        elements.inputVocabKeyword.focus();
+    }
+
+    function closeVocabModal() {
+        elements.modalVocabForm.style.display = 'none';
+        state.vocabEditItem = null;
+    }
+
+    function handleVocabFormSubmit() {
+        const keyword = elements.inputVocabKeyword.value.trim();
+        const meaning = elements.inputVocabMeaning.value.trim();
+        const rawSynonyms = elements.inputVocabSynonyms.value.trim();
+
+        if (!keyword || !meaning) {
+            alert('Vui lòng điền đầy đủ Từ khóa và Nghĩa Tiếng Việt.');
+            return;
+        }
+
+        const synonyms = rawSynonyms
+            ? rawSynonyms.split(',').map(s => s.trim()).filter(s => s.length > 0)
+            : [];
+
+        const editIdRaw = elements.inputVocabEditId.value;
+
+        if (editIdRaw) {
+            // Edit existing word
+            const editId = parseInt(editIdRaw, 10);
+            const item = state.allVocab.find(v => v.id === editId);
+            if (item) {
+                item.key_word = keyword;
+                item.meaning = meaning;
+                item.synonyms = synonyms;
+            }
+        } else {
+            // Add new word
+            const maxId = state.allVocab.reduce((max, v) => (v.id > max ? v.id : max), 0);
+            const newId = maxId + 1;
+
+            const newItem = {
+                id: newId,
+                meaning: meaning,
+                key_word: keyword,
+                synonyms: synonyms
+            };
+            state.allVocab.push(newItem);
+        }
+
+        saveVocabStorage();
+        closeVocabModal();
+        renderVocabList();
+    }
+
+    function handleResetDefaultVocab() {
+        if (confirm('Bạn có chắc chắn muốn khôi phục lại danh sách 151 từ vựng mặc định ban đầu? Tất cả các chỉnh sửa tùy chỉnh sẽ bị xóa.')) {
+            localStorage.removeItem('toeic_vocab_custom_data');
+            if (window.TOEIC_VOCAB_DATA && Array.isArray(window.TOEIC_VOCAB_DATA)) {
+                state.allVocab = JSON.parse(JSON.stringify(window.TOEIC_VOCAB_DATA));
+            }
+            saveVocabStorage();
+            renderVocabList();
+            alert('Đã khôi phục dữ liệu từ vựng mặc định thành công!');
+        }
     }
 
     // Initialize Application
