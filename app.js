@@ -12,9 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
         theme: 'dark',          // 'dark' | 'light'
         
         // Active Session Settings
-        sessionMode: 'mode1',   // 'mode1' | 'mode2'
+        sessionMode: 'mode1',   // 'mode1' | 'mode2' | 'mode3' | 'mode4'
         sessionSource: 'all',  // 'all' | 'srs'
         sessionCount: 10,       // 5 | 10 | 20 | 'all'
+        
+        // Mode 4 Selected Words Queue & Practice Type
+        mode4Queue: [],         // Array of vocab IDs selected for Mode 4 review
+        mode4Type: 'both',      // 'both' | 'mode1' | 'mode2'
         
         // Session Execution Data
         sessionItems: [],
@@ -57,12 +61,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Setup Controls
         modeOptions: document.querySelectorAll('.mode-option'),
+        regularConfigCard: document.getElementById('regular-config-card'),
         sourceBtns: document.querySelectorAll('#source-selector .select-btn'),
         inputSessionCount: document.getElementById('input-session-count'),
         btnCountAll: document.getElementById('btn-count-all'),
         presetBtns: document.querySelectorAll('#count-presets .preset-btn'),
         totalCountBadge: document.getElementById('total-count-badge'),
         btnStartSession: document.getElementById('btn-start-session'),
+
+        // Mode 4 Setup Panel Elements
+        mode4SetupPanel: document.getElementById('mode4-setup-panel'),
+        mode4QueueCount: document.getElementById('mode4-queue-count'),
+        mode4StartBtnCount: document.getElementById('mode4-start-btn-count'),
+        btnMode4ClearQueue: document.getElementById('btn-mode4-clear-queue'),
+        btnMode4StartSession: document.getElementById('btn-mode4-start-session'),
+        mode4TypeBtns: document.querySelectorAll('#mode4-type-selector .suboption-btn'),
+        mode4QueueChipsContainer: document.getElementById('mode4-queue-chips-container'),
+        mode4SearchInput: document.getElementById('mode4-search-input'),
+        btnMode4SearchClear: document.getElementById('btn-mode4-search-clear'),
+        mode4SearchStatsText: document.getElementById('mode4-search-stats-text'),
+        mode4SearchResultsGrid: document.getElementById('mode4-search-results-grid'),
 
         // Practice Controls
         btnQuitPractice: document.getElementById('btn-quit-practice'),
@@ -209,6 +227,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         updateSrsBadges();
+
+        // Mode 4 Queue & Type
+        const savedMode4 = localStorage.getItem('toeic_mode4_queue');
+        if (savedMode4) {
+            try {
+                const arr = JSON.parse(savedMode4);
+                if (Array.isArray(arr)) {
+                    state.mode4Queue = arr;
+                }
+            } catch (e) {
+                state.mode4Queue = [];
+            }
+        }
+        const savedMode4Type = localStorage.getItem('toeic_mode4_type');
+        if (savedMode4Type && ['both', 'mode1', 'mode2'].includes(savedMode4Type)) {
+            state.mode4Type = savedMode4Type;
+        }
     }
 
     function saveSrsStorage() {
@@ -253,6 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     state.allVocab = parsed;
                     console.log(`Loaded ${state.allVocab.length} custom vocab entries from localStorage.`);
                     updateCountBadgeAndMax();
+                    updateMode4QueueUI();
+                    renderMode4SearchResults();
                     return;
                 }
             } catch (e) {
@@ -282,6 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn('Fetch data.json failed (normal on file:// protocol). Using data.js fallback.');
             updateCountBadgeAndMax();
         }
+
+        updateMode4QueueUI();
+        renderMode4SearchResults();
     }
 
     function updateCountBadgeAndMax() {
@@ -311,8 +351,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 const radio = opt.querySelector('input[type="radio"]');
                 radio.checked = true;
                 state.sessionMode = radio.value;
+
+                if (state.sessionMode === 'mode4') {
+                    if (elements.regularConfigCard) elements.regularConfigCard.style.display = 'none';
+                    if (elements.mode4SetupPanel) elements.mode4SetupPanel.style.display = 'flex';
+                    renderMode4SearchResults();
+                    updateMode4QueueUI();
+                } else {
+                    if (elements.regularConfigCard) elements.regularConfigCard.style.display = 'block';
+                    if (elements.mode4SetupPanel) elements.mode4SetupPanel.style.display = 'none';
+                }
             });
         });
+
+        // Mode 4 Setup Listeners
+        if (elements.btnMode4ClearQueue) {
+            elements.btnMode4ClearQueue.addEventListener('click', clearMode4Queue);
+        }
+        if (elements.btnMode4StartSession) {
+            elements.btnMode4StartSession.addEventListener('click', startSession);
+        }
+        if (elements.mode4SearchInput) {
+            elements.mode4SearchInput.addEventListener('input', renderMode4SearchResults);
+        }
+        if (elements.btnMode4SearchClear) {
+            elements.btnMode4SearchClear.addEventListener('click', () => {
+                elements.mode4SearchInput.value = '';
+                renderMode4SearchResults();
+            });
+        }
+        if (elements.mode4TypeBtns) {
+            // Set initial active state based on state.mode4Type
+            elements.mode4TypeBtns.forEach(btn => {
+                if (btn.dataset.type === state.mode4Type) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+                btn.addEventListener('click', () => {
+                    elements.mode4TypeBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    state.mode4Type = btn.dataset.type;
+                    localStorage.setItem('toeic_mode4_type', state.mode4Type);
+                });
+            });
+        }
 
         // Source Selection
         elements.sourceBtns.forEach(btn => {
@@ -446,6 +529,135 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ----------------------------------------------------------------------
+    // Mode 4: Custom Word Selection & Queue Functions
+    // ----------------------------------------------------------------------
+    function saveMode4QueueStorage() {
+        localStorage.setItem('toeic_mode4_queue', JSON.stringify(state.mode4Queue));
+        updateMode4QueueUI();
+    }
+
+    function toggleMode4Queue(id) {
+        const index = state.mode4Queue.indexOf(id);
+        if (index >= 0) {
+            state.mode4Queue.splice(index, 1);
+        } else {
+            state.mode4Queue.push(id);
+        }
+        saveMode4QueueStorage();
+        renderMode4SearchResults();
+    }
+
+    function clearMode4Queue() {
+        if (state.mode4Queue.length === 0) return;
+        if (confirm('Bạn có chắc muốn xóa toàn bộ từ trong hàng chờ Mode 4?')) {
+            state.mode4Queue = [];
+            saveMode4QueueStorage();
+            renderMode4SearchResults();
+        }
+    }
+
+    function updateMode4QueueUI() {
+        const count = state.mode4Queue.length;
+        if (elements.mode4QueueCount) elements.mode4QueueCount.textContent = count;
+        if (elements.mode4StartBtnCount) elements.mode4StartBtnCount.textContent = count;
+
+        if (!elements.mode4QueueChipsContainer) return;
+        elements.mode4QueueChipsContainer.innerHTML = '';
+
+        if (count === 0) {
+            elements.mode4QueueChipsContainer.innerHTML = `
+                <span class="empty-queue-hint">Chưa chọn từ nào. Hãy tìm kiếm và click vào thẻ từ ở bên dưới để thêm vào hàng chờ.</span>
+            `;
+            return;
+        }
+
+        state.mode4Queue.forEach(id => {
+            const item = state.allVocab.find(v => v.id === id);
+            if (!item) return;
+
+            const chip = document.createElement('div');
+            chip.className = 'mode4-chip';
+            chip.innerHTML = `
+                <span><strong>${item.key_word}</strong></span>
+                <span class="chip-meaning">(${item.meaning})</span>
+                <button type="button" class="btn-chip-remove" data-id="${item.id}" title="Xóa khỏi hàng chờ">
+                    <i data-lucide="x" style="width: 12px; height: 12px;"></i>
+                </button>
+            `;
+            chip.querySelector('.btn-chip-remove').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMode4Queue(item.id);
+            });
+            elements.mode4QueueChipsContainer.appendChild(chip);
+        });
+
+        if (window.lucide) lucide.createIcons();
+    }
+
+    function renderMode4SearchResults() {
+        if (!elements.mode4SearchResultsGrid) return;
+
+        const rawQuery = elements.mode4SearchInput ? elements.mode4SearchInput.value : '';
+        const query = sanitize(rawQuery);
+
+        if (elements.btnMode4SearchClear) {
+            elements.btnMode4SearchClear.style.display = rawQuery.length > 0 ? 'inline-flex' : 'none';
+        }
+
+        const filtered = state.allVocab.filter(item => {
+            if (!query) return true;
+            if (String(item.id).includes(query)) return true;
+            if (sanitize(item.key_word).includes(query)) return true;
+            if (sanitize(item.meaning).includes(query)) return true;
+            if (Array.isArray(item.synonyms) && item.synonyms.some(s => sanitize(s).includes(query))) return true;
+            return false;
+        });
+
+        if (elements.mode4SearchStatsText) {
+            elements.mode4SearchStatsText.textContent = `Hiển thị ${filtered.length} / ${state.allVocab.length} từ`;
+        }
+
+        elements.mode4SearchResultsGrid.innerHTML = '';
+
+        if (filtered.length === 0) {
+            elements.mode4SearchResultsGrid.innerHTML = `
+                <div class="glass-card" style="grid-column: 1 / -1; padding: 32px 20px; text-align: center; color: var(--text-muted);">
+                    <i data-lucide="search-x" style="width: 36px; height: 36px; margin-bottom: 8px; opacity: 0.5;"></i>
+                    <p style="font-weight: 700; color: var(--text-primary);">Không tìm thấy từ vựng nào khớp với "${rawQuery}"</p>
+                </div>
+            `;
+            if (window.lucide) lucide.createIcons();
+            return;
+        }
+
+        filtered.forEach(item => {
+            const isSelected = state.mode4Queue.includes(item.id);
+            const card = document.createElement('div');
+            card.className = `mode4-card ${isSelected ? 'selected' : ''}`;
+            
+            const synonymChips = (item.synonyms || []).map(s => `<span class="mode4-syn-chip">${s}</span>`).join('');
+
+            card.innerHTML = `
+                <div class="mode4-card-header">
+                    <span class="mode4-card-id">ID #${item.id}</span>
+                    <div class="mode4-card-keyword">${item.key_word}</div>
+                </div>
+                <div class="mode4-card-meaning">${item.meaning}</div>
+                <div class="mode4-card-synonyms">${synonymChips}</div>
+                <button type="button" class="mode4-card-select-btn">
+                    <i data-lucide="${isSelected ? 'check-circle' : 'plus-circle'}" style="width: 14px; height: 14px;"></i>
+                    <span>${isSelected ? 'Đã trong hàng chờ' : 'Thêm vào hàng chờ'}</span>
+                </button>
+            `;
+
+            card.addEventListener('click', () => toggleMode4Queue(item.id));
+            elements.mode4SearchResultsGrid.appendChild(card);
+        });
+
+        if (window.lucide) lucide.createIcons();
+    }
+
     function switchScreen(screenName) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         if (screenName === 'setup') {
@@ -489,6 +701,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!state.allVocab || state.allVocab.length === 0) {
             alert('Dữ liệu từ vựng chưa sẵn sàng. Vui lòng làm mới trang (F5)!');
+            return;
+        }
+
+        if (state.sessionMode === 'mode4') {
+            if (!state.mode4Queue || state.mode4Queue.length === 0) {
+                alert('Hàng chờ từ vựng Mode 4 đang trống! Vui lòng tìm kiếm và chọn ít nhất 1 từ.');
+                return;
+            }
+
+            const chosenItems = state.allVocab.filter(v => state.mode4Queue.includes(v.id));
+            if (chosenItems.length === 0) {
+                alert('Không tìm thấy từ vựng hợp lệ trong hàng chờ!');
+                return;
+            }
+
+            // Generate questions based on selected mode4Type sub-option
+            let sessionQuestions = [];
+            chosenItems.forEach(item => {
+                if (state.mode4Type === 'mode1' || state.mode4Type === 'both') {
+                    sessionQuestions.push({ ...item, modeOverride: 'mode1' });
+                }
+                if (state.mode4Type === 'mode2' || state.mode4Type === 'both') {
+                    sessionQuestions.push({ ...item, modeOverride: 'mode2' });
+                }
+            });
+
+            state.sessionItems = sessionQuestions;
+            state.currentIndex = 0;
+            state.correctCount = 0;
+            state.perfectCount = 0;
+            state.resultsLog = [];
+            state.elapsedSeconds = 0;
+
+            startTimer();
+            switchScreen('practice');
+            renderQuestion();
             return;
         }
 
@@ -561,7 +809,8 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.practiceProgressFill.style.width = `${pct}%`;
 
         // Render appropriate Mode
-        if (state.sessionMode === 'mode1') {
+        const activeMode = item.modeOverride || state.sessionMode;
+        if (activeMode === 'mode1') {
             elements.viewMode1.classList.add('active');
             elements.viewMode2.classList.remove('active');
             setupMode1(item);

@@ -95,11 +95,21 @@
                                 </div>
                                 <div class="check-mark"><i data-lucide="check-circle-2"></i></div>
                             </label>
+
+                            <label class="mode-option" data-mode="mode4">
+                                <input type="radio" name="study-mode" value="mode4">
+                                <div class="mode-icon"><i data-lucide="check-square"></i></div>
+                                <div class="mode-text">
+                                    <strong>Mode 4: Chọn Từ Tùy Chỉnh</strong>
+                                    <span>Tìm kiếm & chọn danh sách từ muốn ôn, kết hợp Mode 1 & Mode 2.</span>
+                                </div>
+                                <div class="check-mark"><i data-lucide="check-circle-2"></i></div>
+                            </label>
                         </div>
                     </div>
 
                     <!-- Config Options -->
-                    <div class="setup-card glass-card">
+                    <div class="setup-card glass-card" id="regular-config-card">
                         <h3><i data-lucide="sliders"></i> 2. Cấu Hình Phiên Học</h3>
 
                         <div class="config-group">
@@ -140,6 +150,73 @@
                             <span>Bắt Đầu Học Ngay</span>
                             <i data-lucide="arrow-right"></i>
                         </button>
+                    </div>
+                </div>
+
+                <!-- 🎯 Mode 4 Word Selection & Queue Panel (shown when Mode 4 is active) -->
+                <div id="mode4-setup-panel" class="mode4-panel glass-card" style="display: none; margin-top: 24px;">
+                    <div class="mode4-panel-header">
+                        <div class="mode4-header-title">
+                            <h3><i data-lucide="list-checks"></i> Hàng Chờ Từ Vựng Mode 4</h3>
+                            <span class="mode4-subtitle">Chọn các từ vựng bạn muốn ôn tập lại liên tục (kết hợp ghép thẻ & gõ phím)</span>
+                        </div>
+                        <div class="mode4-queue-status">
+                            <span class="queue-count-badge">Đã chọn: <strong id="mode4-queue-count">0</strong> từ</span>
+                            <button type="button" id="btn-mode4-clear-queue" class="btn-secondary btn-sm" title="Xóa tất cả từ đã chọn khỏi hàng chờ">
+                                <i data-lucide="trash-2"></i> <span>Xóa tất cả</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Selected Queue Chips Section -->
+                    <div class="mode4-queue-section">
+                        <div class="mode4-queue-label">Danh sách từ trong hàng chờ:</div>
+                        <div id="mode4-queue-chips-container" class="mode4-queue-chips">
+                            <span class="empty-queue-hint">Chưa chọn từ nào. Hãy tìm kiếm và click vào thẻ từ ở bên dưới để thêm vào hàng chờ.</span>
+                        </div>
+                    </div>
+
+                    <!-- Mode 4 Start Button & Practice Sub-type Options -->
+                    <div class="mode4-action-bar">
+                        <button type="button" id="btn-mode4-start-session" class="btn-primary btn-large glow-btn" style="width: 100%;">
+                            <i data-lucide="play-circle"></i>
+                            <span>Bắt Đầu Ôn Tập Từ Đã Chọn (<span id="mode4-start-btn-count">0</span> từ)</span>
+                        </button>
+
+                        <div class="mode4-suboptions-container">
+                            <label class="mode4-suboption-label"><i data-lucide="sliders"></i> Chọn dạng bài tập cho các từ đã chọn:</label>
+                            <div class="mode4-suboptions-group" id="mode4-type-selector">
+                                <button type="button" class="suboption-btn active" data-type="both">
+                                    <i data-lucide="layers"></i> Kết hợp Mode 1 & Mode 2
+                                </button>
+                                <button type="button" class="suboption-btn" data-type="mode1">
+                                    <i data-lucide="link"></i> Chỉ Mode 1 (Ghép thẻ)
+                                </button>
+                                <button type="button" class="suboption-btn" data-type="mode2">
+                                    <i data-lucide="keyboard"></i> Chỉ Mode 2 (Gõ phím)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mode 4 Search Bar -->
+                    <div class="mode4-search-container">
+                        <h4><i data-lucide="search"></i> Tìm kiếm & Thêm từ vào hàng chờ (như Mode 3)</h4>
+                        <div class="mode4-search-input-wrapper">
+                            <i data-lucide="search" class="search-icon"></i>
+                            <input type="text" id="mode4-search-input" placeholder="Tìm theo ID, Key word, Nghĩa Tiếng Việt hoặc Từ đồng nghĩa..." autocomplete="off">
+                            <button type="button" id="btn-mode4-search-clear" class="btn-icon-sm" title="Xóa từ khóa tìm kiếm" style="display: none;">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                        <div class="mode4-search-stats">
+                            <span id="mode4-search-stats-text">Hiển thị 0 / 0 từ</span>
+                        </div>
+                    </div>
+
+                    <!-- Mode 4 Search Results Grid -->
+                    <div id="mode4-search-results-grid" class="mode4-results-grid">
+                        <!-- Cards dynamically rendered by JS -->
                     </div>
                 </div>
             </section>
